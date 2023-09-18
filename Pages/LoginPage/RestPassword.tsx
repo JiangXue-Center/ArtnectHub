@@ -10,7 +10,8 @@ import {Ionicons} from "@expo/vector-icons";
 const formSchema = z.object({
     password: z.string().min(8,"密码至少8位！").max(20,"密码最多20位"),
     newPassword: z.string().min(8,"密码至少8位！").max(20,"密码最多20位"),
-}).refine(FormData => FormData.password===FormData.newPassword,{
+})
+    .refine(FormData => FormData.password===FormData.newPassword,{
     path:['newPassword'],
     message: "两次密码不一致哦！"
 })
@@ -38,6 +39,7 @@ const RestPassword = ({navigation}: { navigation?: any }) => {
             <FormControl>
                 <Stack space={5} margin={4}>
                     <Stack>
+                        <FormControl.Label>密码</FormControl.Label>
                         <Controller
                             control={control}
                             render={({field: {onChange, onBlur, value}}) => (
@@ -48,7 +50,7 @@ const RestPassword = ({navigation}: { navigation?: any }) => {
                                     onChangeText={value => onChange(value)}
                                     onBlur={onBlur}
                                     value={value}
-                                    InputLeftElement={<Ionicons name="md-person-outline" size={24} color="black"/>}
+                                    type="password"
                                 />
                             )}
                             name="password"
@@ -69,7 +71,7 @@ const RestPassword = ({navigation}: { navigation?: any }) => {
                                     onChangeText={value => onChange(value)}
                                     onBlur={onBlur}
                                     value={value}
-                                    InputLeftElement={<Ionicons name="md-person-outline" size={24} color="black"/>}
+                                    type="password"
                                 />
                             )}
                             name="newPassword"
@@ -81,7 +83,7 @@ const RestPassword = ({navigation}: { navigation?: any }) => {
 
                     <Stack>
                         <Button borderRadius="full" colorScheme="lightBlue"
-                                onPress={() => handleSubmit(onSubmit)}>完成</Button>
+                                onPress={handleSubmit(onSubmit)}>完成</Button>
                     </Stack>
                 </Stack>
             </FormControl>

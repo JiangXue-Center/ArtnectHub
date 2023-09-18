@@ -56,8 +56,7 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
 
     }
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const onSubmit = (data: any) => {        console.log(data);
         submit(data)
         navigation.navigate("NewPassword")
     };

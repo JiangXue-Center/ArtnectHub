@@ -5,6 +5,7 @@ import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
+import {RegisterCodeApi} from "../../api/LoginApi/RegisterApi";
 
 // 创建验证手机号码的模式
 const phoneNumberSchema = z
@@ -32,7 +33,7 @@ function determineInputType(input: string) {
 }
 
 const formSchema = z.object({
-    userName: z
+    certificate: z
         .string()
         .refine((value) => {
             const inputType = determineInputType(value);
@@ -40,18 +41,18 @@ const formSchema = z.object({
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
-    code: z.string().length(6,"请输入正确的验证码"),
+    code: z.string().length(6, "请输入正确的验证码"),
 });
 
 const PhoneLogin = ({navigation}: { navigation?: any }) => {
-    const [code,setCode] = useState("")
+    const [certificate, setCertificate] = useState("")
 
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
     const submit = (data: any) => {
-        console.log(data.userName)
+        console.log(data.certificate)
     }
 
     const onSubmit = (data: any) => {
@@ -60,7 +61,8 @@ const PhoneLogin = ({navigation}: { navigation?: any }) => {
     };
 
     const getCode = () => {
-        console.log(code)
+        console.log(certificate)
+        RegisterCodeApi({certificate,navigation})
     }
 
     return (
@@ -76,17 +78,20 @@ const PhoneLogin = ({navigation}: { navigation?: any }) => {
                                     variant="underlined"
                                     p={2}
                                     placeholder="手机号/邮箱"
-                                    onChangeText={value => onChange(value)}
+                                    onChangeText={value => {
+                                        onChange(value)
+                                        setCertificate(value)
+                                    }}
                                     onBlur={onBlur}
                                     value={value}
                                     InputLeftElement={<Ionicons name="md-person-outline" size={24} color="black"/>}
                                 />
                             )}
-                            name="userName"
+                            name="certificate"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.userName?.message &&
-                            <Text>{errors.userName.message}</Text>}</Text>
+                        <Text color="red.500">{errors.certificate?.message &&
+                            <Text>{errors.certificate.message}</Text>}</Text>
                     </Stack>
 
                     <Stack>
@@ -100,12 +105,13 @@ const PhoneLogin = ({navigation}: { navigation?: any }) => {
                                     placeholder="验证码"
                                     onChangeText={value => {
                                         onChange(value)
-                                        setCode(value)
+
                                     }}
                                     onBlur={onBlur}
                                     value={value}
                                     InputLeftElement={<FontAwesome5 name="envelope" size={24} color="black"/>}
-                                    InputRightElement={<Button colorScheme="lightBlue" onPress={getCode}>获取验证码</Button>}
+                                    InputRightElement={<Button colorScheme="lightBlue"
+                                                               onPress={getCode}>获取验证码</Button>}
                                 />
                             )}
                             name="code"
