@@ -5,46 +5,22 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {z} from "zod";
 import create = StyleSheet.create;
+import DetermineInputType from "../../components/VerificationCode";
 
-
-// 创建验证手机号码的模式
-const phoneNumberSchema = z
-    .string()
-    .refine((value) => /^\d{11}$/.test(value), {
-        message: "请输入有效的手机号码",
-    });
-
-// 创建验证邮箱的模式
-const emailSchema = z
-    .string()
-    .email({
-        message: "请输入有效的邮箱地址",
-    });
-
-// 根据用户输入判断是手机号还是邮箱
-function determineInputType(input: string) {
-    if (phoneNumberSchema.safeParse(input).success) {
-        return "手机号";
-    } else if (emailSchema.safeParse(input).success) {
-        return "邮箱";
-    } else {
-        return "无效的输入";
-    }
-}
 
 const formSchema = z.object({
     userName: z
         .string()
         .refine((value) => {
-            const inputType = determineInputType(value);
-            return inputType === "手机号" || inputType === "邮箱";
+            const inputType = DetermineInputType(value);
+            return inputType === "1" || inputType === "2";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
     password: z.string().min(8, {message: "密码至少要8位以上"}).max(20, {message: "密码最多输入20位"}),
 });
 
-const EmailLogin = ({navigation}: { navigation?: any }) => {
+const PasswordLogin = ({navigation}: { navigation?: any }) => {
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
@@ -117,7 +93,7 @@ const EmailLogin = ({navigation}: { navigation?: any }) => {
     )
 }
 
-export default EmailLogin
+export default PasswordLogin
 
 const styles = create({
     font: {

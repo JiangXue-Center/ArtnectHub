@@ -1,71 +1,51 @@
-import {Input, Stack, FormControl, HStack, Button,Text} from 'native-base';
+import {Input, Stack, FormControl, HStack, Button, Text} from 'native-base';
 import {FontAwesome5, Ionicons} from '@expo/vector-icons';
 import {View} from "react-native";
-import {RegisterComponent} from "../../components/LoginPageFontComponent";
-import {useState} from "react";
-import {Controller, useForm} from "react-hook-form";
 import {z} from "zod";
+import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-
-// 创建验证手机号码的模式
-const phoneNumberSchema = z
-    .string()
-    .refine((value) => /^\d{11}$/.test(value), {
-        message: "请输入有效的手机号码",
-    });
-
-// 创建验证邮箱的模式
-const emailSchema = z
-    .string()
-    .email({
-        message: "请输入有效的邮箱地址",
-    });
-
-// 根据用户输入判断是手机号还是邮箱
-function determineInputType(input: string) {
-    if (phoneNumberSchema.safeParse(input).success) {
-        return "手机号";
-    } else if (emailSchema.safeParse(input).success) {
-        return "邮箱";
-    } else {
-        return "无效的输入";
-    }
-}
+import {useState} from "react";
+import {ResetPasswordNextStep, SendCode} from "../../api/LoginApi";
+import DetermineInputType from "../../components/VerificationCode";
+import {RegisterComponent} from "../../components/LoginPageFontComponent";
 
 const formSchema = z.object({
-    userName: z
+    certificate: z
         .string()
         .refine((value) => {
-            const inputType = determineInputType(value);
-            return inputType === "手机号" || inputType === "邮箱";
+            const inputType = DetermineInputType(value);
+            //1是手机号，2是邮箱
+            return inputType === "1" || inputType === "2";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
-    code: z.string().length(6,"请输入正确的验证码"),
+    code: z.string().length(6, "请输入正确的验证码"),
 });
 
 const Register = ({navigation}: { navigation?: any }) => {
 
-    const [code,setCode] = useState("")
+    const [certificate, setCertificate] = useState("")
 
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    const submit = (data: any) => {
-        console.log(data.userName)
+    const submit = ({data}: { data: string }) => {
+        console.log("data:"+data)
+        ResetPasswordNextStep(data, navigation)
     }
-
     const onSubmit = (data: any) => {
-        console.log(data);
-        submit(data)
-        navigation.navigate("RestPassword")
+        console.log("data:"+data);
+        // 暂时注释，调试时要用
+        ResetPasswordNextStep(data, navigation)
+        // navigation.navigate("RestPassword")
+        // submit(data)
     };
 
     const getCode = () => {
-        console.log(code)
+        console.log(certificate)
+        SendCode({certificate, navigation})
     }
-
 
     return (
         <View>
@@ -81,17 +61,20 @@ const Register = ({navigation}: { navigation?: any }) => {
                                     variant="underlined"
                                     p={2}
                                     placeholder="手机号/邮箱"
-                                    onChangeText={value => onChange(value)}
+                                    onChangeText={value => {
+                                        onChange(value)
+                                        setCertificate(value)
+                                    }}
                                     onBlur={onBlur}
                                     value={value}
                                     InputLeftElement={<Ionicons name="md-person-outline" size={24} color="black"/>}
                                 />
                             )}
-                            name="userName"
+                            name="certificate"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.userName?.message &&
-                            <Text>{errors.userName.message}</Text>}</Text>
+                        <Text color="red.500">{errors.certificate?.message &&
+                            <Text>{errors.certificate.message}</Text>}</Text>
                     </Stack>
 
                     <Stack>
@@ -105,12 +88,12 @@ const Register = ({navigation}: { navigation?: any }) => {
                                     placeholder="验证码"
                                     onChangeText={value => {
                                         onChange(value)
-                                        setCode(value)
                                     }}
                                     onBlur={onBlur}
                                     value={value}
                                     InputLeftElement={<FontAwesome5 name="envelope" size={24} color="black"/>}
-                                    InputRightElement={<Button colorScheme="lightBlue" onPress={getCode}>获取验证码</Button>}
+                                    InputRightElement={<Button colorScheme="lightBlue"
+                                                               onPress={getCode}>获取验证码</Button>}
                                 />
                             )}
                             name="code"
@@ -120,8 +103,8 @@ const Register = ({navigation}: { navigation?: any }) => {
                     </Stack>
 
                     <Stack>
-                        <HStack justifyContent={"space-between"}>
-                            <Text onPress={() => navigation.navigate("Login")}>已注册？登陆</Text>
+                        <HStack>
+                            <Text onPress={() => navigation.navigate("ForgetPassword")}>已注册？登陆</Text>
                         </HStack>
                     </Stack>
 

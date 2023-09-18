@@ -5,46 +5,24 @@ import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
-import {RegisterCodeApi} from "../../api/LoginApi/RegisterApi";
-
-// 创建验证手机号码的模式
-const phoneNumberSchema = z
-    .string()
-    .refine((value) => /^\d{11}$/.test(value), {
-        message: "请输入有效的手机号码",
-    });
-
-// 创建验证邮箱的模式
-const emailSchema = z
-    .string()
-    .email({
-        message: "请输入有效的邮箱地址",
-    });
-
-// 根据用户输入判断是手机号还是邮箱
-function determineInputType(input: string) {
-    if (phoneNumberSchema.safeParse(input).success) {
-        return "手机号";
-    } else if (emailSchema.safeParse(input).success) {
-        return "邮箱";
-    } else {
-        return "无效的输入";
-    }
-}
+import {SendCode} from "../../api/LoginApi";
+import DetermineInputType from "../../components/VerificationCode";
 
 const formSchema = z.object({
     certificate: z
         .string()
         .refine((value) => {
-            const inputType = determineInputType(value);
-            return inputType === "手机号" || inputType === "邮箱";
+            const inputType = DetermineInputType(value);
+            //1是手机号，2是邮箱
+            return inputType === "1" || inputType === "2";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
     code: z.string().length(6, "请输入正确的验证码"),
 });
 
-const PhoneLogin = ({navigation}: { navigation?: any }) => {
+const CodeLogin = ({navigation}: { navigation?: any }) => {
+
     const [certificate, setCertificate] = useState("")
 
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
@@ -62,7 +40,7 @@ const PhoneLogin = ({navigation}: { navigation?: any }) => {
 
     const getCode = () => {
         console.log(certificate)
-        RegisterCodeApi({certificate,navigation})
+        SendCode({certificate, navigation})
     }
 
     return (
@@ -105,7 +83,6 @@ const PhoneLogin = ({navigation}: { navigation?: any }) => {
                                     placeholder="验证码"
                                     onChangeText={value => {
                                         onChange(value)
-
                                     }}
                                     onBlur={onBlur}
                                     value={value}
@@ -137,4 +114,4 @@ const PhoneLogin = ({navigation}: { navigation?: any }) => {
     )
 }
 
-export default PhoneLogin
+export default CodeLogin

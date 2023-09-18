@@ -1,6 +1,6 @@
-import EmailLogin from "./EmailLogin";
-import PhoneLogin from "./PhoneLogin";
+import PasswordLogin from "./PasswordLogin";
+import CodeLogin from "./CodeLogin";
 import Login from "./Login";
 import ForgetPassword from "./ForgetPassword";
 
-export {EmailLogin, PhoneLogin, Login, ForgetPassword}
+export {PasswordLogin, CodeLogin, Login, ForgetPassword}
