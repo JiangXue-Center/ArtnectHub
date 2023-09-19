@@ -1,12 +1,13 @@
 import {Input, Stack, FormControl, HStack, Button, Text} from 'native-base';
 import {FontAwesome5, Ionicons} from '@expo/vector-icons';
-import {View} from "react-native";
+import {Alert, View} from "react-native";
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
 import {SendCode} from "../../api/LoginApi";
 import DetermineInputType from "../../components/VerificationCode";
+import TimerComponent from "../../components/Timer";
 
 const formSchema = z.object({
     certificate: z
@@ -24,6 +25,9 @@ const formSchema = z.object({
 const CodeLogin = ({navigation}: { navigation?: any }) => {
 
     const [certificate, setCertificate] = useState("")
+    //调用计时器组件TimerComponent
+    const {getTime, isTiming, remainingTime} = TimerComponent()
+
 
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
@@ -36,8 +40,13 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
     };
 
     const getCode = () => {
-        console.log(certificate)
-        SendCode({certificate})
+        if (certificate) {
+            getTime()
+            SendCode({certificate})
+            Alert.alert("成功", "正在发送验证码，请稍后！")
+        } else {
+            Alert.alert("错误", "您的邮箱或手机号为空，请填写！")
+        }
     }
 
     return (
@@ -84,9 +93,16 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
                                     onBlur={onBlur}
                                     value={value}
                                     InputLeftElement={<FontAwesome5 name="envelope" size={24} color="black"/>}
-                                    InputRightElement={<Button colorScheme="lightBlue"
-                                                               onPress={getCode}>获取验证码</Button>}
-                                />
+                                    InputRightElement={isTiming ?
+                                        <Button colorScheme="blueGray"
+                                                disabled={isTiming}>{`请稍等${remainingTime}S`}</Button> :
+                                        <Button
+                                            colorScheme="lightBlue"
+                                            onPress={() => {
+                                                getCode()
+                                            }}>获取验证码
+                                        </Button>
+                                    }/>
                             )}
                             name="code"
                             rules={{required: true}}

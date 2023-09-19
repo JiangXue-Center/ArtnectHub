@@ -1,6 +1,6 @@
 import {Input, Stack, FormControl, HStack, Button, Text} from 'native-base';
 import {FontAwesome5, Ionicons} from '@expo/vector-icons';
-import {View} from "react-native";
+import {Alert, View} from "react-native";
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -10,6 +10,7 @@ import DetermineInputType from "../../components/VerificationCode";
 import {ForgetPasswordComponent} from "../../components/LoginPageFontComponent";
 import instance from "../../service/http/Request";
 import useLoginPageStore from "../../Stores/LoginPageStore";
+import TimerComponent from "../../components/Timer";
 
 const formSchema = z.object({
     certificate: z
@@ -27,6 +28,9 @@ const formSchema = z.object({
 const ForgetPassword = ({navigation}: { navigation?: any }) => {
 
     const dataStore = useLoginPageStore.use.updateStore()
+
+    //调用计时器组件TimerComponent
+    const {getTime, isTiming, remainingTime} = TimerComponent()
 
     const [certificate, setCertificate] = useState("")
 
@@ -52,8 +56,13 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
     };
 
     const getCode = () => {
-        console.log("certificate:" + certificate)
-        SendCode({certificate})
+        if (certificate) {
+            getTime()
+            SendCode({certificate})
+            Alert.alert("成功", "正在发送验证码，请稍后！")
+        } else {
+            Alert.alert("错误", "您的邮箱或手机号为空，请填写！")
+        }
     }
 
 
@@ -104,9 +113,16 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
                                     onBlur={onBlur}
                                     value={value}
                                     InputLeftElement={<FontAwesome5 name="envelope" size={24} color="black"/>}
-                                    InputRightElement={<Button colorScheme="lightBlue"
-                                                               onPress={getCode}>获取验证码</Button>}
-                                />
+                                    InputRightElement={isTiming ?
+                                        <Button colorScheme="blueGray"
+                                                disabled={isTiming}>{`请稍等${remainingTime}S`}</Button> :
+                                        <Button
+                                            colorScheme="lightBlue"
+                                            onPress={() => {
+                                                getCode()
+                                            }}>获取验证码
+                                        </Button>
+                                    }/>
                             )}
                             name="code"
                             rules={{required: true}}
