@@ -29,18 +29,15 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
         resolver: zodResolver(formSchema)
     })
 
-    const submit = (data: any) => {
-        console.log(data.certificate)
-    }
 
     const onSubmit = (data: any) => {
         console.log(data);
-        submit(data)
+        navigation.navigate()
     };
 
     const getCode = () => {
         console.log(certificate)
-        SendCode({certificate, navigation})
+        SendCode({certificate})
     }
 
     return (

@@ -5,39 +5,19 @@ import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
+import { SendCode} from "../../api/LoginApi";
+import DetermineInputType from "../../components/VerificationCode";
 import {ForgetPasswordComponent} from "../../components/LoginPageFontComponent";
-
-// 创建验证手机号码的模式
-const phoneNumberSchema = z
-    .string()
-    .refine((value) => /^\d{11}$/.test(value), {
-        message: "请输入有效的手机号码",
-    });
-
-// 创建验证邮箱的模式
-const emailSchema = z
-    .string()
-    .email({
-        message: "请输入有效的邮箱地址",
-    });
-
-// 根据用户输入判断是手机号还是邮箱
-function determineInputType(input: string) {
-    if (phoneNumberSchema.safeParse(input).success) {
-        return "手机号";
-    } else if (emailSchema.safeParse(input).success) {
-        return "邮箱";
-    } else {
-        return "无效的输入";
-    }
-}
+import instance from "../../service/http/Request";
+import useLoginPageStore from "../../Stores/LoginPageStore";
 
 const formSchema = z.object({
-    userName: z
+    certificate: z
         .string()
         .refine((value) => {
-            const inputType = determineInputType(value);
-            return inputType === "手机号" || inputType === "邮箱";
+            const inputType = DetermineInputType(value);
+            //1是手机号，2是邮箱
+            return inputType === "1" || inputType === "2";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
@@ -45,25 +25,39 @@ const formSchema = z.object({
 });
 
 const ForgetPassword = ({navigation}: { navigation?: any }) => {
-    const [code, setCode] = useState("")
+
+    const dataStore = useLoginPageStore.use.updateStore()
+
+    const [certificate, setCertificate] = useState("")
 
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    const submit = (data: any) => {
-        console.log(data.userName)
+    //在忘记密码的下一步操作
+    const onSubmit = (data: any) => {
+        console.log("data:" + data);
+        // 暂时注释
+        instance.post("", {
+            certificate: data.certificate,
+            code: data.code
+        }).then(response => {
+            console.log("response:" + response)
+            dataStore(data.certificate,data.code)
+            navigation.navigate("NewPassword")
+        }).catch(error => {
+            console.error("error:" + error)
+        })
 
-    }
-
-    const onSubmit = (data: any) => {        console.log(data);
-        submit(data)
-        navigation.navigate("NewPassword")
     };
 
     const getCode = () => {
-        console.log(code)
+        console.log("certificate:" + certificate)
+        SendCode({certificate})
     }
+
+
+
 
     return (
         <View>
@@ -79,17 +73,20 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
                                     variant="underlined"
                                     p={2}
                                     placeholder="手机号/邮箱"
-                                    onChangeText={value => onChange(value)}
+                                    onChangeText={value => {
+                                        onChange(value)
+                                        setCertificate(value)
+                                    }}
                                     onBlur={onBlur}
                                     value={value}
                                     InputLeftElement={<Ionicons name="md-person-outline" size={24} color="black"/>}
                                 />
                             )}
-                            name="userName"
+                            name="certificate"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.userName?.message &&
-                            <Text>{errors.userName.message}</Text>}</Text>
+                        <Text color="red.500">{errors.certificate?.message &&
+                            <Text>{errors.certificate.message}</Text>}</Text>
                     </Stack>
 
                     <Stack>
@@ -103,7 +100,6 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
                                     placeholder="验证码"
                                     onChangeText={value => {
                                         onChange(value)
-                                        setCode(value)
                                     }}
                                     onBlur={onBlur}
                                     value={value}
@@ -136,4 +132,3 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
 }
 
 export default ForgetPassword
-

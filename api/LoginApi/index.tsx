@@ -1,8 +1,9 @@
 import instance from "../../service/http/Request";
 import DetermineInputType from "../../components/VerificationCode";
+import useLoginPageStore from "../../Stores/LoginPageStore";
 
 //请求验证码
-const SendCode = ({certificate}) => {
+const SendCode = ({certificate}: { certificate: string }) => {
 
     const method = DetermineInputType(certificate)
 
@@ -22,17 +23,4 @@ const SendCode = ({certificate}) => {
     })
 }
 
-//在设置密码进行下一步操作
-const ResetPasswordNextStep = (data,navigation) => {
-    instance.post("",{
-        certificate: data.certificate,
-        code: data.code
-    }).then(response => {
-        console.log("response:"+response)
-        navigation.navigate("RestPassword")
-    }).catch(error => {
-        console.error("error:"+error)
-    })
-}
-
-export {SendCode,ResetPasswordNextStep}
+export {SendCode}

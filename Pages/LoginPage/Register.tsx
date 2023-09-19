@@ -5,9 +5,11 @@ import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
-import {ResetPasswordNextStep, SendCode} from "../../api/LoginApi";
+import {SendCode} from "../../api/LoginApi";
 import DetermineInputType from "../../components/VerificationCode";
 import {RegisterComponent} from "../../components/LoginPageFontComponent";
+import instance from "../../service/http/Request";
+import useLoginPageStore from "../../Stores/LoginPageStore";
 
 const formSchema = z.object({
     certificate: z
@@ -26,25 +28,32 @@ const Register = ({navigation}: { navigation?: any }) => {
 
     const [certificate, setCertificate] = useState("")
 
+    const dataStore = useLoginPageStore.use.updateStore()
+
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    const submit = ({data}: { data: string }) => {
-        console.log("data:"+data)
-        ResetPasswordNextStep(data, navigation)
-    }
     const onSubmit = (data: any) => {
-        console.log("data:"+data);
-        // 暂时注释，调试时要用
-        ResetPasswordNextStep(data, navigation)
-        // navigation.navigate("RestPassword")
-        // submit(data)
+        console.log("data:" + data);
+        // 暂时注释
+        instance.post("", {
+            certificate: data.certificate,
+            code: data.code
+        }).then(response => {
+            console.log("response:" + response)
+            dataStore(data.certificate, data.code)
+            navigation.navigate("RestPassword")
+        }).catch(error => {
+            console.error("error:" + error)
+        })
+
+        navigation.navigate("RestPassword")
     };
 
     const getCode = () => {
         console.log(certificate)
-        SendCode({certificate, navigation})
+        SendCode({certificate})
     }
 
     return (

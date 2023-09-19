@@ -6,10 +6,11 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {z} from "zod";
 import create = StyleSheet.create;
 import DetermineInputType from "../../components/VerificationCode";
+import {useState} from "react";
 
 
 const formSchema = z.object({
-    userName: z
+    certificate: z
         .string()
         .refine((value) => {
             const inputType = DetermineInputType(value);
@@ -21,12 +22,13 @@ const formSchema = z.object({
 });
 
 const PasswordLogin = ({navigation}: { navigation?: any }) => {
+
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
     const submit = (data: any) => {
-        console.log(data.userName)
+        console.log(data.certificate)
     }
 
     const onSubmit = (data: any) => {
@@ -51,10 +53,10 @@ const PasswordLogin = ({navigation}: { navigation?: any }) => {
                                 InputLeftElement={<Ionicons name="md-person-outline" size={24} color="black"/>}
                             />
                         )}
-                        name="userName"
+                        name="certificate"
                         rules={{required: true}}
                     />
-                    <Text color="red.500">{errors.userName?.message && <Text>{errors.userName.message}</Text>}</Text>
+                    <Text color="red.500">{errors.certificate?.message && <Text>{errors.certificate.message}</Text>}</Text>
                 </Stack>
 
                 <Stack>

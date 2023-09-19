@@ -1,10 +1,11 @@
 import {Input, Stack, FormControl, Button, Text} from 'native-base';
 import {View} from "react-native";
-import RestPasswordComponent from "../../components/LoginPageFontComponent/RestPasswordComponent";
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Ionicons} from "@expo/vector-icons";
+import useLoginPageStore from "../../Stores/LoginPageStore";
+import instance from "../../service/http/Request";
+import {ForgetPasswordComponent} from "../../components/LoginPageFontComponent";
 
 
 const formSchema = z.object({
@@ -18,24 +19,35 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 const NewPassword = ({navigation}: { navigation?: any }) => {
+    const certificateStore = useLoginPageStore.use.certificate()
+    const codeStore = useLoginPageStore.use.code()
+
 
     const {control,handleSubmit,formState:{errors} } = useForm<FormData>({
         resolver: zodResolver(formSchema)
     })
 
-    const submit = (data: any) => {
-        console.log(data.password)
-        navigation.navigate("Login")
-    }
-
     const onSubmit = (data: any) => {
-        console.log(data);
-        submit(data)
+        navigation.navigate("Login")
+        console.log("certificate和code："+certificateStore,codeStore)
+        console.log(data)
+        // instance.post("",{
+        //     certificate: certificateStore,
+        //     code: codeStore,
+        //     password: data.password,
+        //     newPassword: data.newPassword
+        // }).then(response => {
+        //     console.log("response:"+response)
+        //     navigation.navigate("Login")
+        // }).catch(error => {
+        //     console.error("error:"+error)
+        // })
+
     };
 
     return (
         <View>
-            <RestPasswordComponent/>
+            <ForgetPasswordComponent/>
             <FormControl>
                 <Stack space={5} margin={4}>
                     <Stack>

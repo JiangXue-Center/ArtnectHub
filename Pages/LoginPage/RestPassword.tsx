@@ -4,7 +4,8 @@ import RestPasswordComponent from "../../components/LoginPageFontComponent/RestP
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Ionicons} from "@expo/vector-icons";
+import useLoginPageStore from "../../Stores/LoginPageStore";
+import instance from "../../service/http/Request";
 
 
 const formSchema = z.object({
@@ -19,18 +20,31 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>
 const RestPassword = ({navigation}: { navigation?: any }) => {
 
+    const certificateStore = useLoginPageStore.use.certificate()
+    const codeStore = useLoginPageStore.use.code()
+
     const {control,handleSubmit,formState:{errors} } = useForm<FormData>({
         resolver: zodResolver(formSchema)
     })
 
-    const submit = (data: any) => {
-        console.log(data.userName)
-        navigation.navigate("Login")
-    }
-
     const onSubmit = (data: any) => {
-        console.log(data);
-        submit(data)
+        console.log("data:"+data.password,data.newPassword);
+        console.log("certificateStore和codeStore："+certificateStore,codeStore)
+        navigation.navigate("Login")
+
+        // 暂时注释
+        // instance.post("",{
+        //     certificate: certificateStore,
+        //     code: codeStore,
+        //     password: data.password,
+        //     newPassword: data.newPassword
+        // }).then(response => {
+        //     console.log("response="+response)
+        //     navigation.navigate("Login")
+        // }).catch(error => {
+        //     console.error("error="+error)
+        // })
+
     };
 
     return (
