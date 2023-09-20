@@ -3,16 +3,17 @@ import MinePage from "../../Pages/MinePage";
 import TheFirstHomePageTopTabRoute from "./TheFirstHomePageTopTabRoute";
 import MallPage from "../../Pages/MallPage";
 import {Ionicons} from '@expo/vector-icons';
-import {SearchBarFirstHomePageComponent} from "../../components/MyTheme";
+import {SearchBarFirstHomePageComponent, SearchBarMallPageComponent} from "../../components/MyTheme";
 import {Entypo} from '@expo/vector-icons';
 import {AntDesign} from '@expo/vector-icons';
 import AIDrawingPage from "../../Pages/AIDrawingPage";
+import LogoComponent from "../../components/LogoComponent";
 
 
 const TabButtom = createBottomTabNavigator()
 
 
-const HomePageRoute = ({navigation}:{navigation:any}) => {
+const HomePageRoute = ({navigation}: { navigation: any }) => {
     return (
 
         <TabButtom.Navigator screenOptions={{
@@ -26,10 +27,9 @@ const HomePageRoute = ({navigation}:{navigation:any}) => {
                     headerStyle: {
                         borderWidth: 1
                     },
+                    headerTitle: () => <LogoComponent/>,
                     //搜索框
-                    headerRight: () => (
-                            <SearchBarFirstHomePageComponent navigation={navigation}/>
-                    ),
+                    headerRight: () => (<SearchBarFirstHomePageComponent navigation={navigation}/>),
                     headerRightContainerStyle: {
                         alignItems: "flex-start"
                     },
@@ -44,6 +44,12 @@ const HomePageRoute = ({navigation}:{navigation:any}) => {
                 component={MallPage}
                 options={{
                     title: "商城",
+                    headerTitle: () => <LogoComponent/>,
+                    //搜索框
+                    headerRight: () => (<SearchBarMallPageComponent navigation={navigation}/>),
+                    headerRightContainerStyle: {
+                        alignItems: "flex-start"
+                    },
                     tabBarIcon: ({focused}) => (
                         focused ? <Entypo name="shopping-cart" size={24} color="black"/> :
                             <AntDesign name="shoppingcart" size={24} color="black"/>

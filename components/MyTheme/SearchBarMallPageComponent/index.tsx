@@ -2,8 +2,9 @@ import {Icon, Input} from "native-base";
 import {Ionicons} from "@expo/vector-icons";
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 
-// 首页搜索框
-const SearchBarFirstHomePageComponent = ({navigation}: { navigation: any }) => {
+
+// 商城搜索框
+const SearchBarMallPageComponent = ({navigation}: { navigation: any }) => {
     return (
         <View style={styles.container}>
             <Input
@@ -25,7 +26,7 @@ const SearchBarFirstHomePageComponent = ({navigation}: { navigation: any }) => {
     );
 }
 
-export default SearchBarFirstHomePageComponent;
+export default SearchBarMallPageComponent;
 
 const styles = StyleSheet.create({
     container: {

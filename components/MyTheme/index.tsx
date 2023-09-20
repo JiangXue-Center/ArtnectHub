@@ -1,3 +1,4 @@
 import SearchBarFirstHomePageComponent from "./SearchBarFirstHomePageComponent";
+import SearchBarMallPageComponent from "./SearchBarMallPageComponent";
 
-export {SearchBarFirstHomePageComponent}
+export {SearchBarFirstHomePageComponent,SearchBarMallPageComponent}
