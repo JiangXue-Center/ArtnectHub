@@ -1,7 +1,7 @@
 //失败提示
 import {Alert} from "react-native";
 
-export const ErrorTipApi = (err: any) => {
+export const ErrorTipApi = (err:any) => {
     if (err && err.response) {
         switch (err.response.status) {
             case 400:

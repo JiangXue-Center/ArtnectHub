@@ -31,16 +31,17 @@ const PasswordLogin = ({navigation}: { navigation?: any }) => {
     const onSubmit = (data: any) => {
         const method = DetermineInputTypePassword(data.certificate)
         console.log("data="+data)
-        instance.post("",{
-            certificate: data.certificate,
-            verifyCode: data.verifyCode,
-            method: method
-        }).then(response => {
-            console.log("response="+response)
-            navigation.navigate("")
-        }).catch(error => {
-            console.error("error="+ error)
-        })
+        navigation.navigate("HomePageRoute")
+        // instance.post("",{
+        //     certificate: data.certificate,
+        //     verifyCode: data.verifyCode,
+        //     method: method
+        // }).then(response => {
+        //     console.log("response="+response)
+        //     navigation.navigate("")
+        // }).catch(error => {
+        //     console.error("error="+ error)
+        // })
     };
     return (
         <FormControl>

@@ -37,17 +37,17 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
 
     const onSubmit = (data: any) => {
         console.log(data);
-        navigation.navigate('')
-        instance.post("",{
-            certificate: data.certificate,
-            verifyCode: data.verifyCode,
-            method: method
-        }).then(response => {
-            console.log(response)
-            navigation.navigate("")
-        }).catch(error => {
-            console.error(error)
-        })
+        navigation.navigate("HomePageRoute")
+        // instance.post("",{
+        //     certificate: data.certificate,
+        //     verifyCode: data.verifyCode,
+        //     method: method
+        // }).then(response => {
+        //     console.log(response)
+        //     navigation.navigate("")
+        // }).catch(error => {
+        //     console.error(error)
+        // })
     };
 
     const getCode = () => {

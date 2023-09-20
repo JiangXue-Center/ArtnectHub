@@ -1,11 +1,8 @@
-import LoginPageRoute from "./route";
-import {NativeBaseProvider} from "native-base";
+import Index from "./route";
 
 const App = () => {
     return (
-        <NativeBaseProvider>
-            <LoginPageRoute/>
-        </NativeBaseProvider>
+        <Index/>
     )
 }
 

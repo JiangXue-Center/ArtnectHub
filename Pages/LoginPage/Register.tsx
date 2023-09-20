@@ -139,7 +139,7 @@ const Register = ({navigation}: { navigation?: any }) => {
 
                     <Stack>
                         <HStack>
-                            <Text onPress={() => navigation.navigate("ForgetPassword")}>已注册？登陆</Text>
+                            <Text onPress={() => navigation.navigate("Login")}>已注册？登陆</Text>
                         </HStack>
                     </Stack>
 
