@@ -4,7 +4,7 @@ import {ErrorTipApi} from "../../api/errorTip/ErrorTipApi";
 
 /**封装axios文件**/
 const instance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: "http://10.23.131.12:7111",
     timeout: TIMEOUT
 })
 
@@ -15,6 +15,7 @@ instance.interceptors.request.use(
     (config) => {
         console.log("config.data:"+config.data)
         console.log("发起请求成功")
+        // config.headers["Content-Type"] = 'application/x-www-form-urlencoded'
         return config;
     },
     (err) => {

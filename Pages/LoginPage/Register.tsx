@@ -6,7 +6,7 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
 import {SendCode} from "../../api/LoginApi";
-import DetermineInputType from "../../components/VerificationCode";
+import DetermineInputTypeCode from "../../components/VerificationCode/DetermineInputTypeCode";
 import {RegisterComponent} from "../../components/LoginPageFontComponent";
 import instance from "../../service/http/Request";
 import useLoginPageStore from "../../Stores/LoginPageStore";
@@ -16,9 +16,9 @@ const formSchema = z.object({
     certificate: z
         .string()
         .refine((value) => {
-            const inputType = DetermineInputType(value);
-            //1是手机号，2是邮箱
-            return inputType === "1" || inputType === "2";
+            const inputType = DetermineInputTypeCode(value);
+            //3是手机号，1是邮箱
+            return inputType === "1" || inputType === "3";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
@@ -31,6 +31,8 @@ const Register = ({navigation}: { navigation?: any }) => {
 
     const dataStore = useLoginPageStore.use.updateStore()
 
+    const dataTokenStore = useLoginPageStore.use.updateRegister_token()
+
     //调用计时器组件TimerComponent
     const {getTime, isTiming, remainingTime} = TimerComponent()
 
@@ -39,14 +41,24 @@ const Register = ({navigation}: { navigation?: any }) => {
     })
 
     const onSubmit = (data: any) => {
+        //1是邮箱，3是手机号
+        const method = DetermineInputTypeCode(data.certificate)
         console.log("data:" + data);
         // 暂时注释
-        instance.post("", {
+        instance.post("/auth/check", {
             certificate: data.certificate,
-            code: data.code
+            method: method,
+            code: data.code,
+        },{
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded'
+            }
         }).then(response => {
             console.log("response:" + response)
             dataStore(data.certificate, data.code)
+            const register_token = response.data.data.register_token
+            console.log("data:"+register_token)
+            dataTokenStore(register_token)
             navigation.navigate("RestPassword")
         }).catch(error => {
             console.error("error:" + error)

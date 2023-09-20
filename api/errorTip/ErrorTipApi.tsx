@@ -11,7 +11,7 @@ export const ErrorTipApi = (err: any) => {
             case 401:
                 Alert.alert("未授权，请登录");
                 break;
-                //
+
             case 403:
                 Alert.alert("拒绝访问");
                 break;

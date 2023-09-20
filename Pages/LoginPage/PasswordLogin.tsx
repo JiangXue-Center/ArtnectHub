@@ -5,37 +5,42 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {z} from "zod";
 import create = StyleSheet.create;
-import DetermineInputType from "../../components/VerificationCode";
-import {useEffect, useState} from "react";
-
+import {DetermineInputTypePassword} from "../../components/VerificationCode";
+import instance from "../../service/http/Request";
 
 const formSchema = z.object({
     certificate: z
         .string()
         .refine((value) => {
-            const inputType = DetermineInputType(value);
-            return inputType === "1" || inputType === "2";
+            const inputType =DetermineInputTypePassword(value);
+            //2是邮箱+密码，4是手机号+密码
+            return inputType === "2" || inputType === "4";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
-    password: z.string().min(8, {message: "密码至少要8位以上"}).max(20, {message: "密码最多输入20位"}),
+    verifyCode: z.string().min(8, {message: "密码至少要8位以上"}).max(20, {message: "密码最多输入20位"}),
 });
 
 const PasswordLogin = ({navigation}: { navigation?: any }) => {
-
-
 
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-    const submit = (data: any) => {
-        console.log(data.certificate)
-    }
 
     const onSubmit = (data: any) => {
-        console.log(data);
-        submit(data)
+        const method = DetermineInputTypePassword(data.certificate)
+        console.log("data="+data)
+        instance.post("",{
+            certificate: data.certificate,
+            verifyCode: data.verifyCode,
+            method: method
+        }).then(response => {
+            console.log("response="+response)
+            navigation.navigate("")
+        }).catch(error => {
+            console.error("error="+ error)
+        })
     };
     return (
         <FormControl>
@@ -77,10 +82,10 @@ const PasswordLogin = ({navigation}: { navigation?: any }) => {
                                 InputLeftElement={<EvilIcons name="lock" size={24} color="black"/>}
                             />
                         )}
-                        name="password"
+                        name="verifyCode"
                         rules={{required: true}}
                     />
-                    <Text color="red.500">{errors.password?.message && <Text>{errors.password.message}</Text>}</Text>
+                    <Text color="red.500">{errors.verifyCode?.message && <Text>{errors.verifyCode.message}</Text>}</Text>
                 </Stack>
 
                 <Stack>

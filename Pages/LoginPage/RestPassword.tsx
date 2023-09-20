@@ -6,44 +6,54 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import useLoginPageStore from "../../Stores/LoginPageStore";
 import instance from "../../service/http/Request";
+import DetermineInputTypeCode from "../../components/VerificationCode/DetermineInputTypeCode";
 
 
 const formSchema = z.object({
-    password: z.string().min(8,"密码至少8位！").max(20,"密码最多20位"),
-    newPassword: z.string().min(8,"密码至少8位！").max(20,"密码最多20位"),
+    verifyCode: z.string().min(8, "密码至少8位！").max(20, "密码最多20位"),
+    checkPassword: z.string().min(8, "密码至少8位！").max(20, "密码最多20位"),
 })
-    .refine(FormData => FormData.password===FormData.newPassword,{
-    path:['newPassword'],
-    message: "两次密码不一致哦！"
-})
+    .refine(FormData => FormData.verifyCode === FormData.checkPassword, {
+        path: ['checkPassword'],
+        message: "两次密码不一致哦！"
+    })
 
 type FormData = z.infer<typeof formSchema>
 const RestPassword = ({navigation}: { navigation?: any }) => {
 
     const certificateStore = useLoginPageStore.use.certificate()
-    const codeStore = useLoginPageStore.use.code()
+    // const verifyCode = useLoginPageStore.use.code()
+    const registerToken = useLoginPageStore.use.register_token()
 
-    const {control,handleSubmit,formState:{errors} } = useForm<FormData>({
+    const {control, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: zodResolver(formSchema)
     })
 
     const onSubmit = (data: any) => {
-        console.log("data:"+data.password,data.newPassword);
-        console.log("certificateStore和codeStore："+certificateStore,codeStore)
-        navigation.navigate("Login")
+        console.log("data:" + data.verifyCode, data.checkPassword);
+        // console.log("certificateStore和verifyCode："+certificateStore,verifyCode)
+        // navigation.navigate("Login")
+
+        const method = DetermineInputTypeCode(certificateStore)
 
         // 暂时注释
-        // instance.post("",{
-        //     certificate: certificateStore,
-        //     code: codeStore,
-        //     password: data.password,
-        //     newPassword: data.newPassword
-        // }).then(response => {
-        //     console.log("response="+response)
-        //     navigation.navigate("Login")
-        // }).catch(error => {
-        //     console.error("error="+error)
-        // })
+        instance.post("/auth/register", {
+            //账号
+            certificate: certificateStore,
+            // 密码
+            verifyCode: data.verifyCode,
+            //确认密码
+            checkPassword: data.checkPassword,
+            //1是邮箱，3是手机号
+            method: method,
+            //注册授权码
+            registerToken: registerToken
+        }).then(response => {
+            console.log("response=" + response)
+            navigation.navigate("Login")
+        }).catch(error => {
+            console.error("error=" + error)
+        })
 
     };
 
@@ -67,11 +77,11 @@ const RestPassword = ({navigation}: { navigation?: any }) => {
                                     type="password"
                                 />
                             )}
-                            name="password"
+                            name="verifyCode"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.password?.message &&
-                            <Text>{errors.password.message}</Text>}</Text>
+                        <Text color="red.500">{errors.verifyCode?.message &&
+                            <Text>{errors.verifyCode.message}</Text>}</Text>
                     </Stack>
                     <Stack>
                         <FormControl.Label>确认密码</FormControl.Label>
@@ -88,11 +98,11 @@ const RestPassword = ({navigation}: { navigation?: any }) => {
                                     type="password"
                                 />
                             )}
-                            name="newPassword"
+                            name="checkPassword"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.newPassword?.message &&
-                            <Text>{errors.newPassword.message}</Text>}</Text>
+                        <Text color="red.500">{errors.checkPassword?.message &&
+                            <Text>{errors.checkPassword.message}</Text>}</Text>
                     </Stack>
 
                     <Stack>

@@ -6,7 +6,7 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
 import { SendCode} from "../../api/LoginApi";
-import DetermineInputType from "../../components/VerificationCode";
+import DetermineInputTypeCode from "../../components/VerificationCode/DetermineInputTypeCode";
 import {ForgetPasswordComponent} from "../../components/LoginPageFontComponent";
 import instance from "../../service/http/Request";
 import useLoginPageStore from "../../Stores/LoginPageStore";
@@ -16,13 +16,13 @@ const formSchema = z.object({
     certificate: z
         .string()
         .refine((value) => {
-            const inputType = DetermineInputType(value);
-            //1是手机号，2是邮箱
-            return inputType === "1" || inputType === "2";
+            const inputType = DetermineInputTypeCode(value);
+            //3是手机号，1是邮箱
+            return inputType === "1" || inputType === "3";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
-    code: z.string().length(6, "请输入正确的验证码"),
+    verifyCode: z.string().length(6, "请输入正确的验证码"),
 });
 
 const ForgetPassword = ({navigation}: { navigation?: any }) => {
@@ -44,10 +44,10 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
         // 暂时注释
         instance.post("", {
             certificate: data.certificate,
-            code: data.code
+            verifyCode: data.verifyCode
         }).then(response => {
             console.log("response:" + response)
-            dataStore(data.certificate,data.code)
+            dataStore(data.certificate,data.verifyCode)
             navigation.navigate("NewPassword")
         }).catch(error => {
             console.error("error:" + error)
@@ -64,9 +64,6 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
             Alert.alert("错误", "您的邮箱或手机号为空，请填写！")
         }
     }
-
-
-
 
     return (
         <View>
@@ -124,10 +121,10 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
                                         </Button>
                                     }/>
                             )}
-                            name="code"
+                            name="verifyCode"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.code?.message && <Text>{errors.code.message}</Text>}</Text>
+                        <Text color="red.500">{errors.verifyCode?.message && <Text>{errors.verifyCode.message}</Text>}</Text>
                     </Stack>
 
                     <Stack>

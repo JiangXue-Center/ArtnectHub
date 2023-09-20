@@ -6,20 +6,21 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
 import {SendCode} from "../../api/LoginApi";
-import DetermineInputType from "../../components/VerificationCode";
+import DetermineInputTypeCode from "../../components/VerificationCode/DetermineInputTypeCode";
 import TimerComponent from "../../components/Timer";
+import instance from "../../service/http/Request";
 
 const formSchema = z.object({
     certificate: z
         .string()
         .refine((value) => {
-            const inputType = DetermineInputType(value);
-            //1是手机号，2是邮箱
-            return inputType === "1" || inputType === "2";
+            const inputType = DetermineInputTypeCode(value);
+            //3是手机号，1是邮箱
+            return inputType === "1" || inputType === "3";
         }, {
             message: "请输入有效的手机号或邮箱",
         }),
-    code: z.string().length(6, "请输入正确的验证码"),
+    verifyCode: z.string().length(6, "请输入正确的验证码"),
 });
 
 const CodeLogin = ({navigation}: { navigation?: any }) => {
@@ -28,15 +29,25 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
     //调用计时器组件TimerComponent
     const {getTime, isTiming, remainingTime} = TimerComponent()
 
+    const method = DetermineInputTypeCode(certificate)
 
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-
     const onSubmit = (data: any) => {
         console.log(data);
-        navigation.navigate()
+        navigation.navigate('')
+        instance.post("",{
+            certificate: data.certificate,
+            verifyCode: data.verifyCode,
+            method: method
+        }).then(response => {
+            console.log(response)
+            navigation.navigate("")
+        }).catch(error => {
+            console.error(error)
+        })
     };
 
     const getCode = () => {
@@ -104,10 +115,10 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
                                         </Button>
                                     }/>
                             )}
-                            name="code"
+                            name="verifyCode"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.code?.message && <Text>{errors.code.message}</Text>}</Text>
+                        <Text color="red.500">{errors.verifyCode?.message && <Text>{errors.verifyCode.message}</Text>}</Text>
                     </Stack>
 
                     <Stack>
