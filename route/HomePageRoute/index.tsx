@@ -9,7 +9,6 @@ import {AntDesign} from '@expo/vector-icons';
 import AIDrawingPage from "../../Pages/AIDrawingPage";
 import LogoComponent from "../../components/LogoComponent";
 
-
 const TabButtom = createBottomTabNavigator()
 
 
