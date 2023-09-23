@@ -5,12 +5,13 @@ import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
-import {SendCode} from "../../api/LoginApi";
 import DetermineInputTypeCode from "../../components/VerificationCode/DetermineInputTypeCode";
 import {RegisterComponent} from "../../components/LoginPageFontComponent";
 import instance from "../../service/http/Request";
 import useLoginPageStore from "../../Stores/LoginPageStore";
 import TimerComponent from "../../components/Timer";
+import LoginSendCodeApi from "../../api/LoginSendCodeApi";
+import RequestHttp from "../../service/http/Request";
 
 const formSchema = z.object({
     certificate: z
@@ -32,6 +33,8 @@ const Register = ({navigation}: { navigation?: any }) => {
     const dataStore = useLoginPageStore.use.updateStore()
 
     const dataTokenStore = useLoginPageStore.use.updateRegister_token()
+
+    const {instance} = RequestHttp()
 
     //调用计时器组件TimerComponent
     const {getTime, isTiming, remainingTime} = TimerComponent()
@@ -68,7 +71,7 @@ const Register = ({navigation}: { navigation?: any }) => {
     const getCode = () => {
         if (certificate) {
             getTime()
-            SendCode({certificate})
+            LoginSendCodeApi({certificate})
             Alert.alert("成功", "正在发送验证码，请稍后！")
         } else {
             Alert.alert("错误", "您的邮箱或手机号为空，请填写！")

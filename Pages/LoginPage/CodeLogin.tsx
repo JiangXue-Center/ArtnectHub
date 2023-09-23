@@ -5,10 +5,11 @@ import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useState} from "react";
-import {SendCode} from "../../api/LoginApi";
 import DetermineInputTypeCode from "../../components/VerificationCode/DetermineInputTypeCode";
 import TimerComponent from "../../components/Timer";
 import instance from "../../service/http/Request";
+import LoginApi from "../../api/LoginApi";
+import LoginSendCodeApi from "../../api/LoginSendCodeApi";
 
 const formSchema = z.object({
     certificate: z
@@ -24,6 +25,7 @@ const formSchema = z.object({
 });
 
 const CodeLogin = ({navigation}: { navigation?: any }) => {
+    const {codeLoginMethod} = LoginApi()
 
     const [certificate, setCertificate] = useState("")
     //调用计时器组件TimerComponent
@@ -36,24 +38,13 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
     })
 
     const onSubmit = (data: any) => {
-        console.log(data);
-        navigation.navigate("HomePageRoute")
-        // instance.post("",{
-        //     certificate: data.certificate,
-        //     verifyCode: data.verifyCode,
-        //     method: method
-        // }).then(response => {
-        //     console.log(response)
-        //     navigation.navigate("")
-        // }).catch(error => {
-        //     console.error(error)
-        // })
+        codeLoginMethod({data, method, navigation})
     };
 
     const getCode = () => {
         if (certificate) {
             getTime()
-            SendCode({certificate})
+            LoginSendCodeApi({certificate})
             Alert.alert("成功", "正在发送验证码，请稍后！")
         } else {
             Alert.alert("错误", "您的邮箱或手机号为空，请填写！")
@@ -118,7 +109,8 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
                             name="verifyCode"
                             rules={{required: true}}
                         />
-                        <Text color="red.500">{errors.verifyCode?.message && <Text>{errors.verifyCode.message}</Text>}</Text>
+                        <Text color="red.500">{errors.verifyCode?.message &&
+                            <Text>{errors.verifyCode.message}</Text>}</Text>
                     </Stack>
 
                     <Stack>

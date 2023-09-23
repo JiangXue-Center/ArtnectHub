@@ -74,11 +74,12 @@ import AttentionScreenPicturesStore, {pictureType} from "../../../Stores/Attenti
 import {Box, Divider, Image, VStack} from "native-base";
 import {EvilIcons} from "@expo/vector-icons";
 import AttentionSwiper from "../../../Layouts/AttentionSwiper";
-
+import AttentionScreenApi from "../../../api/AttentionScreenApi";
 
 const AttentionScreen = () => {
     const cardStore = AttentionScreenPicturesStore.use.pictures()
     const [isFresh, setIsFresh] = useState(false)
+    const {swiperPictureApi, picturesApi} = AttentionScreenApi()
 
     const Item = ({key, sources, userId, userName, like, userSvg}: pictureType) => {
         return (
@@ -91,7 +92,6 @@ const AttentionScreen = () => {
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: sources}}
-
                                 />
                             </TouchableOpacity>
                         </Box>
@@ -125,6 +125,14 @@ const AttentionScreen = () => {
     const isLoading = () => {
         //开启加载动画
         setIsFresh(true)
+        console.log(11111111)
+        swiperPictureApi()
+        picturesApi()
+    }
+
+    const refreshUp = () => {
+        setIsFresh(true)
+        picturesApi()
     }
 
     setTimeout(() => {
@@ -151,9 +159,7 @@ const AttentionScreen = () => {
                 onRefresh={() => isLoading()}
                 // 上拉刷新,
                 onEndReachedThreshold={0.1}//触底比率，0.1表示距离底部还有10%
-                onEndReached={() => {
-                    Alert.alert("到底了")
-                }}
+                onEndReached={() => refreshUp()}
             />
         </SafeAreaView>
     );

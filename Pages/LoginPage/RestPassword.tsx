@@ -7,6 +7,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import useLoginPageStore from "../../Stores/LoginPageStore";
 import instance from "../../service/http/Request";
 import DetermineInputTypeCode from "../../components/VerificationCode/DetermineInputTypeCode";
+import RequestHttp from "../../service/http/Request";
 
 
 const formSchema = z.object({
@@ -21,8 +22,10 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>
 const RestPassword = ({navigation}: { navigation?: any }) => {
 
+    const {instance} = RequestHttp()
+
     const certificateStore = useLoginPageStore.use.certificate()
-    // const verifyCode = useLoginPageStore.use.code()
+
     const registerToken = useLoginPageStore.use.register_token()
 
     const {control, handleSubmit, formState: {errors}} = useForm<FormData>({

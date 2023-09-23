@@ -1,9 +1,39 @@
-import React, {Component} from 'react'
-import {AppRegistry, Dimensions, StyleSheet, Text, View} from 'react-native'
-
+import {Alert, Dimensions, StyleSheet, View} from 'react-native'
 import Swiper from 'react-native-swiper'
 import AttentionScreenPicturesStore from "../../Stores/AttentionScreenPicturesStore";
 import {Image} from "native-base";
+import {useEffect} from "react";
+import instance from "../../service/http/Request";
+import AttentionScreenApi from "../../api/AttentionScreenApi";
+
+//首页轮播图
+const {width} = Dimensions.get("window")
+const AttentionSwiper = () => {
+    const swiperStore = AttentionScreenPicturesStore.use.swiperPictures()
+    const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()
+    const {swiperPictureApi} = AttentionScreenApi()
+
+    useEffect(() => {
+        swiperPictureApi()
+    }, []);
+
+    return (
+        <Swiper
+            showsButtons={false}
+            autoplay={true}
+            style={styles.container}
+            loop={true}
+        >
+            {swiperStore.map((item) => (
+                <View key={item.key}>
+                    <Image size={200} width={width} source={{uri: item.sources}}/>
+                </View>
+            ))}
+        </Swiper>
+    )
+}
+
+export default AttentionSwiper
 
 const styles = StyleSheet.create({
     container: {
@@ -20,28 +50,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 })
-
-const {width} = Dimensions.get("window")
-
-const AttentionSwiper = () => {
-    const swiperStore = AttentionScreenPicturesStore.use.pictures()
-
-
-    return (
-        <Swiper
-            showsButtons={false}
-            autoplay={true}
-            style={styles.container}
-            loop={true}
-        >
-            {swiperStore.map((item) => (
-                <View>
-                    <Image key={item.key} size={200} width={width} source={{uri: item.sources}}/>
-                </View>
-            ))}
-        </Swiper>
-    )
-}
-
-export default AttentionSwiper
 

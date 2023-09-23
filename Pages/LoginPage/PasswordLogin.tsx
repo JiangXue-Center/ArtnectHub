@@ -7,6 +7,7 @@ import {z} from "zod";
 import create = StyleSheet.create;
 import {DetermineInputTypePassword} from "../../components/VerificationCode";
 import instance from "../../service/http/Request";
+import LoginApi from "../../api/LoginApi";
 
 const formSchema = z.object({
     certificate: z
@@ -23,6 +24,7 @@ const formSchema = z.object({
 
 const PasswordLogin = ({navigation}: { navigation?: any }) => {
 
+    const {passwordLoginMethod} = LoginApi()
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
@@ -30,18 +32,9 @@ const PasswordLogin = ({navigation}: { navigation?: any }) => {
 
     const onSubmit = (data: any) => {
         const method = DetermineInputTypePassword(data.certificate)
-        console.log("data="+data)
-        navigation.navigate("HomePageRoute")
-        // instance.post("",{
-        //     certificate: data.certificate,
-        //     verifyCode: data.verifyCode,
-        //     method: method
-        // }).then(response => {
-        //     console.log("response="+response)
-        //     navigation.navigate("")
-        // }).catch(error => {
-        //     console.error("error="+ error)
-        // })
+
+        passwordLoginMethod({data,method,navigation})
+
     };
     return (
         <FormControl>
