@@ -26,6 +26,7 @@ const {width} = Dimensions.get("window")
 const AttentionSwiper = () => {
     const swiperStore = AttentionScreenPicturesStore.use.pictures()
 
+
     return (
         <Swiper
             showsButtons={false}

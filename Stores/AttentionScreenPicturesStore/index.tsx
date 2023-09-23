@@ -1,7 +1,7 @@
 import {create} from "zustand";
 import createSelectors from "../../utils/zustandSelector";
 
-interface pictureType {
+export interface pictureType {
     //key就是picture的id
     key: string,
     //图片的图像地址
