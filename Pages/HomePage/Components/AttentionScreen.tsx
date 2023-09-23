@@ -1,74 +1,10 @@
-// //关注界面的轮播图
-// import AttentionSwiper from "../../../Layouts/AttentionSwiper";
-// import {Alert, Dimensions, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
-// import AttentionScreenPicturesStore from "../../../Stores/AttentionScreenPicturesStore";
-// import {Box, Divider, Image, VStack} from "native-base";
-// import {useState} from "react";
-// import {AntDesign, EvilIcons} from "@expo/vector-icons";
-//
-// const AttentionScreen = ({navigation}: { navigation: any }) => {
-//     const cardStore = AttentionScreenPicturesStore.use.pictures()
-//     return (
-//         <SafeAreaView>
-//             <ScrollView>
-//                 <AttentionSwiper/>
-//                 <View style={{
-//                     flex: 2,
-//                     flexDirection: "row",
-//                     // columnGap: 2,
-//                     flexWrap: "wrap",
-//                     alignItems: "center",
-//                     justifyContent: "center"
-//                 }}>
-//                     {cardStore.map((item) => (
-//                         <Box borderWidth="1" borderColor="gray.300" borderRadius="lg"
-//                              width={Dimensions.get("window").width / 2.2} margin={2}>
-//                             <VStack divider={<Divider/>} height={250} key={item.key}>
-//                                 <Box>
-//                                     <TouchableOpacity>
-//                                         <Image size={100} height={200}
-//                                                width={Dimensions.get("window").width / 2.1}
-//                                                source={{uri: item.sources}}
-//
-//                                         />
-//                                     </TouchableOpacity>
-//                                 </Box>
-//                                 <Box px="4" pb="4" flexDirection="row" justifyContent="space-between"
-//                                      alignItems="center">
-//                                     <View>
-//                                         <Image
-//                                             size={30}
-//                                             borderRadius={100}
-//                                             // resizeMode="contain"解决图片显示不全的方法
-//                                             resizeMode="contain"
-//                                             source={{uri: item.userSvg}}
-//                                             alt="同画"/>
-//                                         <Text>{item.userName}</Text>
-//                                     </View>
-//                                     <View style={{alignItems: "center", justifyContent: "center", borderColor: "gray"}}>
-//                                         <EvilIcons name="heart" size={24} color="black"/>
-//                                         <Text>{item.like}</Text>
-//                                     </View>
-//                                 </Box>
-//                             </VStack>
-//                         </Box>
-//                     ))}
-//                 </View>
-//             </ScrollView>
-//         </SafeAreaView>
-//     )
-// }
-//
-// export default AttentionScreen
-
-
 import React, {useState} from 'react';
 import {
     SafeAreaView,
     FlatList,
     StyleSheet,
     Text,
-    TouchableOpacity, Dimensions, View, ScrollView, Alert
+    TouchableOpacity, Dimensions, View,
 } from 'react-native';
 import AttentionScreenPicturesStore, {pictureType} from "../../../Stores/AttentionScreenPicturesStore";
 import {Box, Divider, Image, VStack} from "native-base";
@@ -117,6 +53,7 @@ const AttentionScreen = () => {
             </SafeAreaView>
         );
     }
+
     const renderItem = ({item}: ({ item: any })) => (
         <Item key={item.key} sources={item.sources} userId={item.userId} userName={item.userName} like={item.like}
               userSvg={item.userSvg}/>
@@ -126,13 +63,18 @@ const AttentionScreen = () => {
         //开启加载动画
         setIsFresh(true)
         console.log(11111111)
-        swiperPictureApi()
-        picturesApi()
+        //暂时注释
+        // //轮播图请求
+        // swiperPictureApi()
+        // //推荐部分请求
+        // picturesApi()
     }
 
     const refreshUp = () => {
         setIsFresh(true)
-        picturesApi()
+        //暂时注释
+        //推荐部分请求
+        // picturesApi()
     }
 
     setTimeout(() => {

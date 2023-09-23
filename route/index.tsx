@@ -1,4 +1,4 @@
-import LoginPageRoute from "./LoginPageRoute";
+import LoginPageRoute from "./PageRoute";
 
 const Index = () => {
   return(

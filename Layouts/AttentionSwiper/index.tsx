@@ -14,7 +14,9 @@ const AttentionSwiper = () => {
     const {swiperPictureApi} = AttentionScreenApi()
 
     useEffect(() => {
-        swiperPictureApi()
+        //暂时注释
+        //轮播图请求
+        // swiperPictureApi()
     }, []);
 
     return (

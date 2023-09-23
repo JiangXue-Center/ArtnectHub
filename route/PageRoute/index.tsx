@@ -7,6 +7,7 @@ import NewPassword from "../../Pages/LoginPage/NewPassword";
 import HomePageRoute from "../HomePageRoute";
 import {NativeBaseProvider} from "native-base";
 import InformationPage from "../../Pages/InformationPage";
+import SearchRoute from "../SearchRoute";
 
 const Stack = createNativeStackNavigator()
 const LoginPageRoute = () => {
@@ -22,7 +23,8 @@ const LoginPageRoute = () => {
                     <Stack.Screen name="Register" component={Register} options={{title: "注册"}}/>
                     <Stack.Screen name="NewPassword" component={NewPassword} options={{title: "重设密码"}}/>
                     <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{headerShown: false}}/>
-                    <Stack.Screen name="InformationPage" component={InformationPage} options={{title: "消息"}} />
+                    <Stack.Screen name="InformationPage" component={InformationPage} options={{title: "消息"}}/>
+                    <Stack.Screen name="HomeSearchPage" component={SearchRoute} options={{headerShown: false}}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </NativeBaseProvider>

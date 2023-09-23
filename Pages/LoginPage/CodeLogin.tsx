@@ -38,7 +38,9 @@ const CodeLogin = ({navigation}: { navigation?: any }) => {
     })
 
     const onSubmit = (data: any) => {
+        //验证码登陆
         codeLoginMethod({data, method, navigation})
+        navigation.navigate("HomePageRoute")
     };
 
     const getCode = () => {

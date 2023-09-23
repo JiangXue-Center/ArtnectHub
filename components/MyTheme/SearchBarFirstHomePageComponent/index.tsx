@@ -15,6 +15,7 @@ const SearchBarFirstHomePageComponent = ({navigation}: { navigation: any }) => {
                 py={1}
                 px={1}
                 InputLeftElement={<Icon ml={2} size={4} color="gray.400" as={<Ionicons name="ios-search"/>}/>}
+                onPressIn={() => navigation.navigate("HomeSearchPage")}
             />
             <TouchableOpacity style={styles.textContainer}>
                 <Ionicons name="chatbubble-ellipses-outline" size={24} color="black" onPress={() => {

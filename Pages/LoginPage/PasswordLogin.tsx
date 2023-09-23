@@ -32,7 +32,9 @@ const PasswordLogin = ({navigation}: { navigation?: any }) => {
 
     const onSubmit = (data: any) => {
         const method = DetermineInputTypePassword(data.certificate)
-        passwordLoginMethod({data,method,navigation})
+        //登陆
+        // passwordLoginMethod({data,method,navigation})
+        navigation.navigate("HomePageRoute")
     };
 
     return (
