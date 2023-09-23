@@ -30,8 +30,6 @@ const ForgetPassword = ({navigation}: { navigation?: any }) => {
 
     const dataStore = useLoginPageStore.use.updateStore()
 
-    const {instance} = RequestHttp()
-
     //调用计时器组件TimerComponent
     const {getTime, isTiming, remainingTime} = TimerComponent()
 

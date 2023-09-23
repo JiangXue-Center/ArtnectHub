@@ -6,7 +6,6 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import useLoginPageStore from "../../Stores/LoginPageStore";
 import instance from "../../service/http/Request";
 import {ForgetPasswordComponent} from "../../components/LoginPageFontComponent";
-import RequestHttp from "../../service/http/Request";
 
 
 const formSchema = z.object({
@@ -22,7 +21,6 @@ type FormData = z.infer<typeof formSchema>
 const NewPassword = ({navigation}: { navigation?: any }) => {
     const certificateStore = useLoginPageStore.use.certificate()
     const codeStore = useLoginPageStore.use.code()
-    const {instance} = RequestHttp()
 
 
     const {control,handleSubmit,formState:{errors} } = useForm<FormData>({

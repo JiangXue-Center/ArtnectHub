@@ -8,6 +8,7 @@ import create = StyleSheet.create;
 import {DetermineInputTypePassword} from "../../components/VerificationCode";
 import instance from "../../service/http/Request";
 import LoginApi from "../../api/LoginApi";
+import useLoginPageStore from "../../Stores/LoginPageStore";
 
 const formSchema = z.object({
     certificate: z
@@ -23,19 +24,17 @@ const formSchema = z.object({
 });
 
 const PasswordLogin = ({navigation}: { navigation?: any }) => {
-
+    const Authorization = useLoginPageStore.use.Authorization()
     const {passwordLoginMethod} = LoginApi()
     const {handleSubmit, control, formState: {errors}} = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
-
     const onSubmit = (data: any) => {
         const method = DetermineInputTypePassword(data.certificate)
-
         passwordLoginMethod({data,method,navigation})
-
     };
+
     return (
         <FormControl>
             <Stack space={5} margin={4}>

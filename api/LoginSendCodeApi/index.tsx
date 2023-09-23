@@ -1,6 +1,5 @@
 import instance from "../../service/http/Request";
 import DetermineInputType from "../../components/VerificationCode/DetermineInputTypeCode";
-import useLoginPageStore from "../../Stores/LoginPageStore";
 
 //请求验证码
 const LoginSendCodeApi = ({certificate}: { certificate: string }) => {

@@ -1,8 +1,7 @@
-import RequestHttp from "../../service/http/Request";
 import useLoginPageStore from "../../Stores/LoginPageStore";
+import instance from "../../service/http/Request";
 
 const LoginApi = () => {
-    const {instance} = RequestHttp()
     const {setToken} = useLoginPageStore()
     //验证码登陆
     const codeLoginMethod = ({data, method, navigation}: { data: any, method: string, navigation: any }) => {
@@ -14,7 +13,8 @@ const LoginApi = () => {
         }).then(response => {
             console.log("token="+response.data.data.Authorization)
             //获取token
-            // navigation.navigate("HomePageRoute")
+            setToken(response.data.data.Authorization)
+            navigation.navigate("HomePageRoute")
         }).catch(error => {
             console.error(error)
         })
@@ -29,7 +29,7 @@ const LoginApi = () => {
         }).then(response => {
             //获取token
             setToken(response.data.data.Authorization)
-            // navigation.navigate("HomePageRoute")
+            navigation.navigate("HomePageRoute")
         }).catch(error => {
             console.error("error=" + error)
         })

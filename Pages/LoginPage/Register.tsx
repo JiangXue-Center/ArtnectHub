@@ -34,7 +34,6 @@ const Register = ({navigation}: { navigation?: any }) => {
 
     const dataTokenStore = useLoginPageStore.use.updateRegister_token()
 
-    const {instance} = RequestHttp()
 
     //调用计时器组件TimerComponent
     const {getTime, isTiming, remainingTime} = TimerComponent()
