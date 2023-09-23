@@ -31,17 +31,17 @@ const NewPassword = ({navigation}: { navigation?: any }) => {
         navigation.navigate("Login")
         console.log("certificate和code："+certificateStore,codeStore)
         console.log(data)
-        // instance.post("",{
-        //     certificate: certificateStore,
-        //     code: codeStore,
-        //     password: data.password,
-        //     newPassword: data.newPassword
-        // }).then(response => {
-        //     console.log("response:"+response)
-        //     navigation.navigate("Login")
-        // }).catch(error => {
-        //     console.error("error:"+error)
-        // })
+        instance.post("",{
+            certificate: certificateStore,
+            code: codeStore,
+            password: data.password,
+            newPassword: data.newPassword
+        }).then(response => {
+            console.log("response:"+response)
+            navigation.navigate("Login")
+        }).catch(error => {
+            console.error("error:"+error)
+        })
 
     };
 
