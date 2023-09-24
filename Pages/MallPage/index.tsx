@@ -3,7 +3,7 @@ import {SafeAreaView, Text} from "react-native";
 const MallPage = () => {
   return(
       <SafeAreaView>
-          <Text>社区</Text>
+          <Text>商城</Text>
       </SafeAreaView>
   )
 }

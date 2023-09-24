@@ -1,8 +1,6 @@
 import axios from "axios";
 import {TIMEOUT} from "./Config";
 import {ErrorTipApi} from "../../api/errorTip/ErrorTipApi";
-import useLoginPageStore from "../../Stores/LoginPageStore";
-
 
 /**封装axios文件**/
 const instance = axios.create({
