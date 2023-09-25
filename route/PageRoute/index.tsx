@@ -8,6 +8,8 @@ import HomePageRoute from "../HomePageRoute";
 import {NativeBaseProvider} from "native-base";
 import InformationPage from "../../Pages/InformationPage";
 import SearchRoute from "../SearchRoute";
+import WorkDetailsPage from "../../Pages/HomePage/WorkDetailsPage/Components";
+import HeaderTitleLeft from "../../Pages/HomePage/WorkDetailsPage/Components/HeaderTitleLeft";
 
 const Stack = createNativeStackNavigator()
 const LoginPageRoute = () => {
@@ -25,6 +27,16 @@ const LoginPageRoute = () => {
                     <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{headerShown: false}}/>
                     <Stack.Screen name="InformationPage" component={InformationPage} options={{title: "消息"}}/>
                     <Stack.Screen name="HomeSearchPage" component={SearchRoute} options={{headerShown: false}}/>
+                    <Stack.Screen
+                        name="WorkDetailsPage"
+                        component={WorkDetailsPage}
+                        options={{
+                            title: "",
+                            headerLeft: () => (
+                                <HeaderTitleLeft/>
+                            )
+
+                    }}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </NativeBaseProvider>

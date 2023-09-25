@@ -12,7 +12,7 @@ import {EvilIcons} from "@expo/vector-icons";
 import AttentionSwiper from "../../../Layouts/AttentionSwiper";
 import AttentionScreenApi from "../../../api/AttentionScreenApi";
 
-const AttentionScreen = () => {
+const AttentionScreen = ({navigation}: {navigation: any}) => {
     const cardStore = AttentionScreenPicturesStore.use.pictures()
     const [isFresh, setIsFresh] = useState(false)
     const {swiperPictureApi, picturesApi} = AttentionScreenApi()
@@ -24,7 +24,7 @@ const AttentionScreen = () => {
                      width={Dimensions.get("window").width / 2.2} margin={2}>
                     <VStack divider={<Divider/>} height={250} key={key}>
                         <Box>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=>navigation.navigate("WorkDetailsPage")}>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: sources}}
@@ -67,7 +67,7 @@ const AttentionScreen = () => {
         // //轮播图请求
         // swiperPictureApi()
         // //推荐部分请求
-        // picturesApi()
+        picturesApi()
     }
 
     const refreshUp = () => {
@@ -85,7 +85,7 @@ const AttentionScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <AttentionSwiper/>
+            <AttentionSwiper navigation={navigation}/>
             <FlatList
                 data={cardStore}
                 renderItem={renderItem}
@@ -95,7 +95,7 @@ const AttentionScreen = () => {
                 initialNumToRender={3}//让数据先加载三条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
-                ListHeaderComponent={<AttentionSwiper/>}
+                ListHeaderComponent={<AttentionSwiper navigation={navigation}/>}
                 //refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
                 refreshing={isFresh}
                 onRefresh={() => isLoading()}

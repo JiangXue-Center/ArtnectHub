@@ -1,4 +1,4 @@
-import {Alert, Dimensions, StyleSheet, View} from 'react-native'
+import {Alert, Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native'
 import Swiper from 'react-native-swiper'
 import AttentionScreenPicturesStore from "../../Stores/AttentionScreenPicturesStore";
 import {Image} from "native-base";
@@ -8,7 +8,7 @@ import AttentionScreenApi from "../../api/AttentionScreenApi";
 
 //首页轮播图
 const {width} = Dimensions.get("window")
-const AttentionSwiper = () => {
+const AttentionSwiper = ({navigation}: { navigation: any }) => {
     const swiperStore = AttentionScreenPicturesStore.use.swiperPictures()
     const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()
     const {swiperPictureApi} = AttentionScreenApi()
@@ -28,7 +28,9 @@ const AttentionSwiper = () => {
         >
             {swiperStore.map((item) => (
                 <View key={item.key}>
-                    <Image size={200} width={width} source={{uri: item.sources}}/>
+                    <TouchableOpacity onPress={() => navigation.navigate("WorkDetailsPage")}>
+                        <Image size={200} width={width} source={{uri: item.sources}}/>
+                    </TouchableOpacity>
                 </View>
             ))}
         </Swiper>
