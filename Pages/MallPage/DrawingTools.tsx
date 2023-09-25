@@ -1,15 +1,9 @@
-import React, {useState} from 'react';
-import {
-    SafeAreaView,
-    FlatList,
-    StyleSheet,
-    TouchableOpacity, Dimensions,
-} from 'react-native';
-import {Box, Divider, Image, Text, VStack} from "native-base";
+import {Dimensions, FlatList, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
 import MallPageStore, {pictureType} from "../../Stores/MallPageStore";
-import MallPageSwiper from "../../Layouts/MallPageSwiper";
+import React, {useState} from "react";
+import {Box, Divider, Image, Text, VStack} from "native-base";
 
-const MallPage = () => {
+const DrawingTools = () => {
     const MallStore = MallPageStore.use.pictureList()
     const [isFresh, setIsFresh] = useState(false)
 
@@ -75,7 +69,6 @@ const MallPage = () => {
                 initialNumToRender={3}//让数据先加载三条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
-                ListHeaderComponent={<MallPageSwiper/>}
                 //refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
                 refreshing={isFresh}
                 onRefresh={() => isLoading()}
@@ -102,4 +95,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MallPage;
+export default DrawingTools

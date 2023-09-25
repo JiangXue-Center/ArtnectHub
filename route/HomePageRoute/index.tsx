@@ -8,6 +8,7 @@ import {Entypo} from '@expo/vector-icons';
 import {AntDesign} from '@expo/vector-icons';
 import AIDrawingPage from "../../Pages/AIDrawingPage";
 import LogoComponent from "../../components/LogoComponent";
+import MailPageDrawerRoute from "../MallPageDrawerRoute";
 
 const TabButtom = createBottomTabNavigator()
 
@@ -40,7 +41,7 @@ const HomePageRoute = ({navigation}: { navigation: any }) => {
 
             <TabButtom.Screen
                 name="MallPage"
-                component={MallPage}
+                component={MailPageDrawerRoute}
                 options={{
                     title: "商城",
                     headerTitle: () => <LogoComponent/>,
