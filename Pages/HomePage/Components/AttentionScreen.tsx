@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     SafeAreaView,
     FlatList,
@@ -9,25 +9,32 @@ import {
 import AttentionScreenPicturesStore, {pictureType} from "../../../Stores/AttentionScreenPicturesStore";
 import {Box, Divider, Image, VStack} from "native-base";
 import {EvilIcons} from "@expo/vector-icons";
-import AttentionSwiper from "../../../Layouts/AttentionSwiper";
 import AttentionScreenApi from "../../../api/AttentionScreenApi";
 
-const AttentionScreen = ({navigation}: {navigation: any}) => {
+const AttentionScreen = ({navigation}: { navigation: any }) => {
     const cardStore = AttentionScreenPicturesStore.use.pictures()
     const [isFresh, setIsFresh] = useState(false)
-    const {swiperPictureApi, picturesApi} = AttentionScreenApi()
+    const {picturesApi, goToWorkDetailsPageApi} = AttentionScreenApi(navigation)
 
-    const Item = ({key, sources, userId, userName, like, userSvg}: pictureType) => {
+    useEffect(() => {
+        picturesApi()
+    }, []);
+
+    //发送请求去到作品详情页
+    const goWorkDetailsPage = ({id}: { id: string, navigation: any }) => {
+        goToWorkDetailsPageApi(id)
+    }
+    const Item = ({id, indexLink, authorId, userName, likes, authorAvatar}: pictureType) => {
         return (
             <SafeAreaView>
                 <Box borderWidth="1" borderColor="gray.300" borderRadius="lg"
                      width={Dimensions.get("window").width / 2.2} margin={2}>
-                    <VStack divider={<Divider/>} height={250} key={key}>
+                    <VStack divider={<Divider/>} height={250} key={id}>
                         <Box>
-                            <TouchableOpacity onPress={()=>navigation.navigate("WorkDetailsPage")}>
+                            <TouchableOpacity onPress={() => goWorkDetailsPage({id, navigation})}>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
-                                       source={{uri: sources}}
+                                       source={{uri: indexLink}}
                                 />
                             </TouchableOpacity>
                         </Box>
@@ -39,13 +46,13 @@ const AttentionScreen = ({navigation}: {navigation: any}) => {
                                     borderRadius={100}
                                     // resizeMode="contain"解决图片显示不全的方法
                                     resizeMode="contain"
-                                    source={{uri: userSvg}}
+                                    source={{uri: authorAvatar}}
                                     alt="同画"/>
                                 <Text>{userName}</Text>
                             </View>
                             <View style={{alignItems: "center", justifyContent: "center", borderColor: "gray"}}>
                                 <EvilIcons name="heart" size={24} color="black"/>
-                                <Text>{like}</Text>
+                                <Text>{likes}</Text>
                             </View>
                         </Box>
                     </VStack>
@@ -55,8 +62,8 @@ const AttentionScreen = ({navigation}: {navigation: any}) => {
     }
 
     const renderItem = ({item}: ({ item: any })) => (
-        <Item key={item.key} sources={item.sources} userId={item.userId} userName={item.userName} like={item.like}
-              userSvg={item.userSvg}/>
+        <Item id={item.id} authorId={item.authorId} authorAvatar={item.authorAvatar} likes={item.likes}
+              indexLink={item.indexLink} userName={item.userName}/>
     );
 
     const isLoading = () => {
@@ -68,13 +75,14 @@ const AttentionScreen = ({navigation}: {navigation: any}) => {
         // swiperPictureApi()
         // //推荐部分请求
         picturesApi()
+        console.log("cardStore=" + JSON.stringify(cardStore))
     }
 
     const refreshUp = () => {
         setIsFresh(true)
         //暂时注释
         //推荐部分请求
-        // picturesApi()
+        picturesApi()
     }
 
     setTimeout(() => {
@@ -85,17 +93,17 @@ const AttentionScreen = ({navigation}: {navigation: any}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <AttentionSwiper navigation={navigation}/>
+            {/*<AttentionSwiper navigation={navigation}/>*/}
             <FlatList
                 data={cardStore}
                 renderItem={renderItem}
-                keyExtractor={item => item.key}
+                keyExtractor={item => item.id}
                 horizontal={false}//水平布局模式
                 initialScrollIndex={0}//初始化滚动索引
-                initialNumToRender={3}//让数据先加载三条，它会闪一下
+                initialNumToRender={5}//让数据先加载三条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
-                ListHeaderComponent={<AttentionSwiper navigation={navigation}/>}
+                // ListHeaderComponent={<AttentionSwiper navigation={navigation}/>}
                 //refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
                 refreshing={isFresh}
                 onRefresh={() => isLoading()}

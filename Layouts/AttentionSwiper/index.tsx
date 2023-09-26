@@ -11,7 +11,7 @@ const {width} = Dimensions.get("window")
 const AttentionSwiper = ({navigation}: { navigation: any }) => {
     const swiperStore = AttentionScreenPicturesStore.use.swiperPictures()
     const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()
-    const {swiperPictureApi} = AttentionScreenApi()
+    // const {swiperPictureApi} = AttentionScreenApi()
 
     useEffect(() => {
         //暂时注释
@@ -27,9 +27,9 @@ const AttentionSwiper = ({navigation}: { navigation: any }) => {
             loop={true}
         >
             {swiperStore.map((item) => (
-                <View key={item.key}>
+                <View key={item.id}>
                     <TouchableOpacity onPress={() => navigation.navigate("WorkDetailsPage")}>
-                        <Image size={200} width={width} source={{uri: item.sources}}/>
+                        <Image size={200} width={width} source={{uri: item.indexLink}}/>
                     </TouchableOpacity>
                 </View>
             ))}
