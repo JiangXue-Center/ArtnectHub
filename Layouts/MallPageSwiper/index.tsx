@@ -11,7 +11,7 @@ const {width} = Dimensions.get("window")
 const MallPageSwiper = () => {
     const swiperStore = AttentionScreenPicturesStore.use.swiperPictures()
     const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()
-    const {swiperPictureApi} = AttentionScreenApi()
+    // const {swiperPictureApi} = AttentionScreenApi()
 
     useEffect(() => {
         //暂时注释
@@ -27,8 +27,8 @@ const MallPageSwiper = () => {
             loop={true}
         >
             {swiperStore.map((item) => (
-                <View key={item.key}>
-                    <Image size={200} width={width} source={{uri: item.sources}}/>
+                <View key={item.id}>
+                    <Image size={200} width={width} source={{uri: item.indexLink}}/>
                 </View>
             ))}
         </Swiper>

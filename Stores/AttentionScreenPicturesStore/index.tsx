@@ -25,9 +25,45 @@ interface AttentionScreenPicturesType {
 }
 
 const AttentionScreenPicturesStore = createSelectors(create<AttentionScreenPicturesType>()((set) => ({
+    //测试用的数据
     pictures: [
-
+        {
+            id: "1",
+            indexLink: "https://static.runoob.com/images/demo/demo3.jpg",
+            authorId: "1",
+            userName: "原批",
+            likes: "43",
+            authorAvatar: "https://static.runoob.com/images/demo/demo3.jpg"
+        },
+        {
+            id: "1",
+            indexLink: "https://static.runoob.com/images/demo/demo3.jpg",
+            authorId: "1",
+            userName: "原批",
+            likes: "43",
+            authorAvatar: "https://static.runoob.com/images/demo/demo3.jpg"
+        },
+        {
+            id: "1",
+            indexLink: "https://static.runoob.com/images/demo/demo3.jpg",
+            authorId: "1",
+            userName: "原批",
+            likes: "43",
+            authorAvatar: "https://static.runoob.com/images/demo/demo3.jpg"
+        },
+        {
+            id: "1",
+            indexLink: "https://static.runoob.com/images/demo/demo3.jpg",
+            authorId: "1",
+            userName: "原批",
+            likes: "43",
+            authorAvatar: "https://static.runoob.com/images/demo/demo3.jpg"
+        },
     ],
+
+    // pictures: [
+    //
+    // ],
 
     swiperPictures: [
 

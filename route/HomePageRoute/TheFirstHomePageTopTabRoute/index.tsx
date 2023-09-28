@@ -11,8 +11,8 @@ const Tab = createMaterialTopTabNavigator();
 const TheFirstHomePageTopTabRoute = () => {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="AttentionScreen" component={AttentionScreen} options={{title: "关注"}}/>
-            <Tab.Screen name="RecommendScreen" component={RecommendScreen} options={{title: "推荐"}}/>
+            <Tab.Screen name="AttentionScreen" component={AttentionScreen} options={{title: "推荐"}}/>
+            <Tab.Screen name="RecommendScreen" component={RecommendScreen} options={{title: "关注"}}/>
             <Tab.Screen name="NewProductScreen" component={NewProductScreen} options={{title: "新作"}}/>
             <Tab.Screen name="RankingScreen" component={RankingScreen} options={{title: "榜单"}}/>
         </Tab.Navigator>

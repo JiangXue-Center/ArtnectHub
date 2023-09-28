@@ -1,7 +1,7 @@
-import {Alert, Dimensions, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native'
+import {Alert, Dimensions, Modal, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native'
 import Swiper from 'react-native-swiper'
 import {Box, Image, Input, Text} from "native-base";
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import WorkDetailsStore from "../../../../Stores/WorkDetailsStore";
 import {Entypo} from "@expo/vector-icons";
 import styleColors from "../../../../styles/styleColors";
@@ -12,15 +12,15 @@ const AttentionSwiper = ({navigation}: { navigation: any }) => {
 
     const [isTrue, setIsTrue] = useState(true)
 
+    const store = WorkDetailsStore.use.pictures()
+
     //对应不同下标设置不同的颜色
     const color = () => {
         return styleColors[Math.floor(Math.random() * styleColors.length)]
     }
 
-    const store = WorkDetailsStore.use.pictures()
-
     const goSearch = () => {
-      Alert.alert("已点击")
+        Alert.alert("已点击")
     }
 
     return (
@@ -34,7 +34,9 @@ const AttentionSwiper = ({navigation}: { navigation: any }) => {
                 >
                     {store.imageCollection.map((item) => (
                         <TouchableOpacity>
-                            <Image size={400} width={width} source={{uri: item}} alt="啥也没有"/>
+                            <Modal visible={true} transparent={true}>
+                                <Image size={400} width={width} source={{uri: item}} alt="啥也没有"/>
+                            </Modal>
                         </TouchableOpacity>
                     ))}
                 </Swiper>

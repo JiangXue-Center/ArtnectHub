@@ -21,54 +21,56 @@ const AttentionScreenApi = (navigation: any) => {
     }
 
     const picturesApi = () => {
-        instance.get("artwork/index", {
-            headers: {
-                "Authorization": token
-            }
-        }).then(response => {
-            const responseData = response.data.data
-            responseData.forEach((item: any) => {
-                picturesAxios({
-                    id: item.id,
-                    indexLink: item.indexLink,
-                    authorId: item.authorId,
-                    userName: item.username,
-                    likes: item.likes,
-                    authorAvatar: item.authorAvatar,
-                });
-            });
-
-        }).catch(error => {
-            console.error("error=" + error)
-        })
+        // instance.get("artwork/index", {
+        //     headers: {
+        //         "Authorization": token
+        //     }
+        // }).then(response => {
+        //     const responseData = response.data.data
+        //     responseData.forEach((item: any) => {
+        //         picturesAxios({
+        //             id: item.id,
+        //             indexLink: item.indexLink,
+        //             authorId: item.authorId,
+        //             userName: item.username,
+        //             likes: item.likes,
+        //             authorAvatar: item.authorAvatar,
+        //         });
+        //     });
+        //
+        // }).catch(error => {
+        //     console.error("error=" + error)
+        // })
     }
 
     const goToWorkDetailsPageApi = async (id: string) => {
-        try {
-            const response = await instance.get(`artwork/vo/id/${id}`, {
-                headers: {
-                    'Authorization': token
-                }
-            });
+        // try {
+        //     const response = await instance.get(`artwork/vo/id/${id}`, {
+        //         headers: {
+        //             'Authorization': token
+        //         }
+        //     });
+        //
+        //     const responseData = response.data.data;
+        //
+        //     updateStore({
+        //         id: responseData.id,
+        //         authorId: responseData.authorId,
+        //         userName: responseData.username,
+        //         authorAvatar: responseData.authorAvatar,
+        //         caption: responseData.caption,
+        //         tags: responseData.tags,
+        //         imageCollection: responseData.imageCollection,
+        //         publishTime: responseData.publishTime
+        //     });
+        //
+        //     console.log("store:" + JSON.stringify(store));
+        //     navigation.navigate("WorkDetailsPage");
+        // } catch (error) {
+        //     console.error("error:" + error);
+        // }
 
-            const responseData = response.data.data;
-
-            updateStore({
-                id: responseData.id,
-                authorId: responseData.authorId,
-                userName: responseData.username,
-                authorAvatar: responseData.authorAvatar,
-                caption: responseData.caption,
-                tags: responseData.tags,
-                imageCollection: responseData.imageCollection,
-                publishTime: responseData.publishTime
-            });
-
-            console.log("store:" + JSON.stringify(store));
-            navigation.navigate("WorkDetailsPage");
-        } catch (error) {
-            console.error("error:" + error);
-        }
+        navigation.navigate("WorkDetailsPage");
     };
 
 

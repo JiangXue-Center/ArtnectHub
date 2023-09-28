@@ -17,11 +17,13 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
     const {picturesApi, goToWorkDetailsPageApi} = AttentionScreenApi(navigation)
 
     useEffect(() => {
+        //获取推荐页的图片的信息
         picturesApi()
     }, []);
 
     //发送请求去到作品详情页
     const goWorkDetailsPage = ({id}: { id: string, navigation: any }) => {
+        //暂时注释
         goToWorkDetailsPageApi(id)
     }
     const Item = ({id, indexLink, authorId, userName, likes, authorAvatar}: pictureType) => {
@@ -35,6 +37,8 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: indexLink}}
+                                        // 解决图片缓存问题
+                                       resizeMethod="resize"
                                 />
                             </TouchableOpacity>
                         </Box>
@@ -47,7 +51,10 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                                     // resizeMode="contain"解决图片显示不全的方法
                                     resizeMode="contain"
                                     source={{uri: authorAvatar}}
-                                    alt="同画"/>
+                                    alt="同画"
+                                    //解决图片缓存问题
+                                    resizeMethod="resize"
+                                />
                                 <Text>{userName}</Text>
                             </View>
                             <View style={{alignItems: "center", justifyContent: "center", borderColor: "gray"}}>
@@ -100,7 +107,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                 keyExtractor={item => item.id}
                 horizontal={false}//水平布局模式
                 initialScrollIndex={0}//初始化滚动索引
-                initialNumToRender={5}//让数据先加载三条，它会闪一下
+                initialNumToRender={10}//让数据先加载10条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
                 // ListHeaderComponent={<AttentionSwiper navigation={navigation}/>}
