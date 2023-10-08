@@ -14,7 +14,6 @@ const SearchRoute = (navigation: any) => {
                     title: "",
                     //搜索框
                     headerRight: () => (<SearchHomePageComponent navigation={navigation}/>),
-
                 }}
 
             />

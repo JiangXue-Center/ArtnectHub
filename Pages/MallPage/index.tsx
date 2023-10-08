@@ -72,7 +72,7 @@ const MallPage = () => {
                 keyExtractor={item => item.key}
                 horizontal={false}//水平布局模式
                 initialScrollIndex={0}//初始化滚动索引
-                initialNumToRender={3}//让数据先加载三条，它会闪一下
+                initialNumToRender={10}//让数据先加载三条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
                 ListHeaderComponent={<MallPageSwiper/>}

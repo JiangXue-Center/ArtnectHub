@@ -24,7 +24,8 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
     //发送请求去到作品详情页
     const goWorkDetailsPage = ({id}: { id: string, navigation: any }) => {
         //暂时注释
-        goToWorkDetailsPageApi(id)
+        // goToWorkDetailsPageApi(id)
+        navigation.navigate("WorkDetailsPage");
     }
     const Item = ({id, indexLink, authorId, userName, likes, authorAvatar}: pictureType) => {
         return (
@@ -69,7 +70,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
     }
 
     const renderItem = ({item}: ({ item: any })) => (
-        <Item id={item.id} authorId={item.authorId} authorAvatar={item.authorAvatar} likes={item.likes}
+    <Item id={item.id} authorId={item.authorId} authorAvatar={item.authorAvatar} likes={item.likes}
               indexLink={item.indexLink} userName={item.userName}/>
     );
 
@@ -78,8 +79,6 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
         setIsFresh(true)
         console.log(11111111)
         //暂时注释
-        // //轮播图请求
-        // swiperPictureApi()
         // //推荐部分请求
         picturesApi()
         console.log("cardStore=" + JSON.stringify(cardStore))
@@ -96,7 +95,6 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
         //模拟请求数据
         setIsFresh(false)
     }, 2000)
-
 
     return (
         <SafeAreaView style={styles.container}>

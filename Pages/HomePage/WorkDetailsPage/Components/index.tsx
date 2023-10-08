@@ -1,7 +1,7 @@
-import {Alert, Dimensions, Modal, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native'
+import {Alert, Dimensions, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity} from 'react-native'
 import Swiper from 'react-native-swiper'
 import {Box, Image, Input, Text} from "native-base";
-import { useState} from "react";
+import {useState} from "react";
 import WorkDetailsStore from "../../../../Stores/WorkDetailsStore";
 import {Entypo} from "@expo/vector-icons";
 import styleColors from "../../../../styles/styleColors";
@@ -34,9 +34,7 @@ const AttentionSwiper = ({navigation}: { navigation: any }) => {
                 >
                     {store.imageCollection.map((item) => (
                         <TouchableOpacity>
-                            <Modal visible={true} transparent={true}>
-                                <Image size={400} width={width} source={{uri: item}} alt="啥也没有"/>
-                            </Modal>
+                            <Image size={400} width={width} source={{uri: item}} alt="啥也没有"/>
                         </TouchableOpacity>
                     ))}
                 </Swiper>
