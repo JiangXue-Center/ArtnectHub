@@ -18,8 +18,13 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
 
     useEffect(() => {
         //获取推荐页的图片的信息
-        picturesApi()
-    }, []);
+        // picturesApi()
+        console.log(111)
+        const unsubscribe = navigation.addListener('focus', (e: any) => {
+
+        });
+        return unsubscribe
+    }, [navigation]);
 
     //发送请求去到作品详情页
     const goWorkDetailsPage = ({id}: { id: string, navigation: any }) => {
@@ -38,7 +43,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: indexLink}}
-                                        // 解决图片缓存问题
+                                    // 解决图片缓存问题
                                        resizeMethod="resize"
                                 />
                             </TouchableOpacity>
@@ -70,7 +75,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
     }
 
     const renderItem = ({item}: ({ item: any })) => (
-    <Item id={item.id} authorId={item.authorId} authorAvatar={item.authorAvatar} likes={item.likes}
+        <Item id={item.id} authorId={item.authorId} authorAvatar={item.authorAvatar} likes={item.likes}
               indexLink={item.indexLink} userName={item.userName}/>
     );
 
