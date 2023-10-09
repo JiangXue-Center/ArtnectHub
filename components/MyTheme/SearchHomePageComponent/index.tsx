@@ -5,12 +5,15 @@ import {useState} from "react";
 import {MaterialIcons} from '@expo/vector-icons';
 import SearchScreenApi from "../../../api/SearchScreenApi";
 import SearchHistory from "./SearchHistory";
+import SearchScreenStore from "../../../Stores/SearchScreenStore";
 
 // 首页搜索框
 const SearchHomePageComponent = ({navigation}: { navigation: any }) => {
     const [isTrue, setIsTrue] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const {sendSearchValueHttp} = SearchScreenApi()
+    const increaseValve = SearchScreenStore.use.increase()
+    const {sendSearchValueHttp} = SearchScreenApi(navigation)
+
     const deleteSearch = () => {
         setIsTrue(!isTrue)
         console.log("deleteValue=" + searchValue)
@@ -20,14 +23,22 @@ const SearchHomePageComponent = ({navigation}: { navigation: any }) => {
 
     const sendSearch = () => {
         //这里写请求
-        searchValue && sendSearchValueHttp(searchValue)
+        if (searchValue){
+            increaseValve(searchValue)
+            sendSearchValueHttp(searchValue)
+        }
+
+        // navigation.navigate("WorkSearchPage")
+        // if (searchValue){
+        //     sendSearchValueHttp(searchValue)
+        // }
     }
 
     return (
         <View style={styles.container}>
             <Input
                 style={styles.input}
-                placeholder="Search"
+                placeholder="search"
                 variant="rounded"
                 width="75%"
                 borderRadius={10}

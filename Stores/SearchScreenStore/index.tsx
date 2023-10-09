@@ -9,9 +9,9 @@ interface storeType {
 
 interface SearchScreenStoreType {
     //历史记录
-    searchValueList: storeType[],
+    searchValueList: storeType[]
     //推荐信息
-    recommendationHistory: storeType[],
+    recommendationHistory: storeType[]
     //添加历史记录
     increase: (searchValue: string) => void
     //删除所有历史记录
@@ -21,6 +21,7 @@ interface SearchScreenStoreType {
 }
 
 const SearchScreenStore = createSelectors(create<SearchScreenStoreType>()(persist((set) => ({
+
     searchValueList: [],
 
     recommendationHistory: [],
