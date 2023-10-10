@@ -18,12 +18,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
 
     useEffect(() => {
         //获取推荐页的图片的信息
-        // picturesApi()
-        console.log(111)
-        const unsubscribe = navigation.addListener('focus', (e: any) => {
-
-        });
-        return unsubscribe
+        picturesApi()
     }, [navigation]);
 
     //发送请求去到作品详情页

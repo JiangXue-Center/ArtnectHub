@@ -17,14 +17,23 @@ export interface pictureType {
     authorAvatar: string
 }
 
-interface AttentionScreenPicturesType {
+interface WorkSearchPageType {
+    searchValue: string
+    update: (searchValue: string) => void
     pictures: pictureType[]
     swiperPictures: pictureType[]
     axiosPictures: (picture: pictureType) => void
     axiosSwiperStore: (id: string, indexLink: string, authorId: string, userName: string, likes: string, authorAvatar: string) => void
 }
 
-const WorkSearchPageStore = createSelectors(create<AttentionScreenPicturesType>()((set) => ({
+const WorkSearchPageStore = createSelectors(create<WorkSearchPageType>()((set) => ({
+    searchValue: "",
+
+    update: (searchValue) => set((state) => ({
+        ...state,
+        searchValue: searchValue
+    })),
+
     //测试用的数据
     pictures: [
         {

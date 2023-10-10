@@ -8,17 +8,20 @@ import {
 } from 'react-native';
 import {Box, Divider, Image, VStack} from "native-base";
 import {EvilIcons} from "@expo/vector-icons";
-import AttentionScreenApi from "../../api/AttentionScreenApi";
-import AttentionScreenPicturesStore, {pictureType} from "../../Stores/AttentionScreenPicturesStore";
+import WorkSearchPageStore, {pictureType} from "../../Stores/WorkSearchPageStore";
+import SearchScreenApi from "../../api/SearchScreenApi";
+import WorkSearchPageApi from "../../api/WorkSearchPageApi";
 
 const WorkSearchPage = ({navigation}: { navigation: any }) => {
-    const cardStore = AttentionScreenPicturesStore.use.pictures()
+    const cardStore = WorkSearchPageStore.use.pictures()
     const [isFresh, setIsFresh] = useState(false)
-    const {picturesApi, goToWorkDetailsPageApi} = AttentionScreenApi(navigation)
+    const {sendSearchValueHttp} = SearchScreenApi(navigation)
+    const searchValueData = WorkSearchPageStore.use.searchValue()
+    const {goToWorkDetailsPageApi} = WorkSearchPageApi(navigation)
 
     useEffect(() => {
-        //获取推荐页的图片的信息
-        picturesApi()
+        //获取搜索出来的信息
+        sendSearchValueHttp(searchValueData)
     }, []);
 
     //发送请求去到作品详情页
@@ -80,15 +83,14 @@ const WorkSearchPage = ({navigation}: { navigation: any }) => {
         console.log(11111111)
         //暂时注释
         // //推荐部分请求
-        picturesApi()
+        sendSearchValueHttp(searchValueData)
         console.log("cardStore=" + JSON.stringify(cardStore))
     }
 
     const refreshUp = () => {
         setIsFresh(true)
         //暂时注释
-        //推荐部分请求
-        picturesApi()
+        sendSearchValueHttp(searchValueData)
     }
 
     setTimeout(() => {
