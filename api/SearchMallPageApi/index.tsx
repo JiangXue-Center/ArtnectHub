@@ -1,46 +1,40 @@
 import instance from "../../service/http/Request";
-import useLoginPageStore from "../../Stores/LoginPageStore";
-import SearchScreenStore from "../../Stores/SearchScreenStore";
-import WorkSearchPageStore from "../../Stores/WorkSearchPageStore";
 import Token from "../../Token";
-import WorkDetailsStore from "../../Stores/WorkDetailsStore";
-import {useState} from "react";
+import MallSearchScreenStore from "../../Stores/MallSearchPageStore";
+import MallSearchDataStore from "../../Stores/MallSearchDataStore";
 
 //首页的搜索框请求
-const SearchScreenApi = (navigation: any) => {
-    const increaseRecommendationList = SearchScreenStore.use.increaseRecommendationHistory()
-    const picturesAxios = WorkSearchPageStore.use.axiosPictures()
+const SearchMallPageApi = (navigation: any) => {
+    const increaseRecommendationList = MallSearchScreenStore.use.increaseRecommendationHistory()
+    const dataAxios = MallSearchDataStore.use.axiosBusinessStoreData()
     const {token} = Token()
-    const updateData = WorkSearchPageStore.use.update()
-    const [num, setNum] = useState(1)
-
+    const updateData = MallSearchDataStore.use.update()
 
     //点击搜索然后请求
     const sendSearchValueHttp = (searchValue: string) => {
+        console.log(111)
         console.log("value=" + searchValue)
         //将搜索关键词存入store里
         updateData(searchValue)
-        navigation.navigate("WorkSearchPage")
+        //跳转到商品搜索完的页面
+        // navigation.navigate("")
 
-        instance.get(`artwork/vo/keyword/${searchValue}/offset/${num}/size/20`, {
+        instance.get(`sh/keyword/${searchValue}`, {
             headers: {
                 'Authorization': token,
             }
         }).then(response => {
             const responseData = response.data.data
-
-            console.log("responseData:" + JSON.stringify(responseData))
             responseData.forEach((item: any) => {
-                picturesAxios({
-                    id: item.id,
-                    indexLink: item.indexLink,
-                    authorId: item.authorId,
-                    userName: item.username,
-                    likes: item.likes,
-                    authorAvatar: item.authorAvatar,
+                dataAxios({
+                    spuId: item.spuId,
+                    mainImage: item.mainImage,
+                    businessId: item.businessId,
+                    subTitle: item.subTitle,
+                    price: item.price,
+                    businessName: item.businessName,
+                    businessLogo: item.businessLogo
                 });
-                //页数
-                setNum(num + 1)
             });
         }).catch(error => {
             console.error("error=" + error)
@@ -65,4 +59,4 @@ const SearchScreenApi = (navigation: any) => {
     return {sendSearchValueHttp, getRecommendationList}
 }
 
-export default SearchScreenApi
+export default SearchMallPageApi

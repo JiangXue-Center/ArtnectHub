@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
     SafeAreaView,
     FlatList,
@@ -24,10 +24,11 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
     //发送请求去到作品详情页
     const goWorkDetailsPage = ({id}: { id: string, navigation: any }) => {
         //暂时注释
-        // goToWorkDetailsPageApi(id)
-        navigation.navigate("WorkDetailsPage");
+        goToWorkDetailsPageApi(id)
+        // navigation.navigate("WorkDetailsPage");
     }
     const Item = ({id, indexLink, authorId, userName, likes, authorAvatar}: pictureType) => {
+
         return (
             <SafeAreaView>
                 <Box borderWidth="1" borderColor="gray.300" borderRadius="lg"
@@ -40,6 +41,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                                        source={{uri: indexLink}}
                                     // 解决图片缓存问题
                                        resizeMethod="resize"
+                                       alt="找不到了"
                                 />
                             </TouchableOpacity>
                         </Box>
@@ -55,6 +57,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                                     alt="同画"
                                     //解决图片缓存问题
                                     resizeMethod="resize"
+
                                 />
                                 <Text>{userName}</Text>
                             </View>
@@ -105,11 +108,11 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                 keyExtractor={item => item.id}
                 horizontal={false}//水平布局模式
                 initialScrollIndex={0}//初始化滚动索引
-                initialNumToRender={10}//让数据先加载10条，它会闪一下
+                initialNumToRender={20}//让数据先加载20条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
                 // ListHeaderComponent={<AttentionSwiper navigation={navigation}/>}
-                //refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
+                // refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
                 refreshing={isFresh}
                 onRefresh={() => isLoading()}
                 // 上拉刷新,

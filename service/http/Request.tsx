@@ -4,7 +4,7 @@ import {ErrorTipApi} from "../../api/errorTip/ErrorTipApi";
 
 /**封装axios文件**/
 const instance = axios.create({
-    baseURL: "http://10.23.131.12:7111",
+    baseURL: "http://192.168.43.220:7111",
     timeout: TIMEOUT
 })
 

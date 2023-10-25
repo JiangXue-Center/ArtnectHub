@@ -4,15 +4,17 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useState} from "react";
 import {MaterialIcons} from '@expo/vector-icons';
 import SearchScreenApi from "../../../api/SearchScreenApi";
-import SearchHistory from "./SearchHistory";
+// import SearchHistory from "./SearchHistory";
 import SearchScreenStore from "../../../Stores/SearchScreenStore";
+import SearchMallPageApi from "../../../api/SearchMallPageApi";
+import MallSearchScreenStore from "../../../Stores/MallSearchPageStore";
 
 // 首页搜索框
-const SearchHomePageComponent = ({navigation}: { navigation: any }) => {
+const SearchBarSecondPageComponent = ({navigation}: { navigation: any }) => {
     const [isTrue, setIsTrue] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const increaseValve = SearchScreenStore.use.increase()
-    const {sendSearchValueHttp} = SearchScreenApi(navigation)
+    const increaseValve = MallSearchScreenStore.use.increase()
+    const {sendSearchValueHttp} = SearchMallPageApi(navigation)
 
     const deleteSearch = () => {
         setIsTrue(!isTrue)
@@ -25,7 +27,6 @@ const SearchHomePageComponent = ({navigation}: { navigation: any }) => {
         //这里写请求
         if (searchValue){
             increaseValve(searchValue)
-
             sendSearchValueHttp(searchValue)
         }
 
@@ -42,7 +43,7 @@ const SearchHomePageComponent = ({navigation}: { navigation: any }) => {
                 placeholder="search"
                 variant="rounded"
                 width="75%"
-                borderRadius={20}
+                borderRadius={10}
                 py={1}
                 px={1}
                 value={searchValue}
@@ -51,7 +52,6 @@ const SearchHomePageComponent = ({navigation}: { navigation: any }) => {
                     setSearchValue(searchValue)
                     //每敲一个字都可以向后端发送一次请求，暂时注释，先砍掉
                     // sendSearchValueHttp(searchValue)
-
                 }}
                 InputLeftElement={<Icon ml={2} size={4} color="gray.400" as={<Ionicons name="ios-search"/>}/>}
                 InputRightElement={
@@ -66,7 +66,7 @@ const SearchHomePageComponent = ({navigation}: { navigation: any }) => {
     );
 }
 
-export default SearchHomePageComponent;
+export default SearchBarSecondPageComponent;
 
 const styles = StyleSheet.create({
     container: {

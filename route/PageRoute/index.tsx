@@ -10,6 +10,8 @@ import InformationPage from "../../Pages/InformationPage";
 import SearchRoute from "../SearchRoute";
 import WorkDetailsPage from "../../Pages/HomePage/WorkDetailsPage/Components";
 import HeaderTitleLeft from "../../Pages/HomePage/WorkDetailsPage/Components/HeaderTitleLeft";
+import MallPageSearchPage from "../../Pages/MallPage/MallPageSearchPage";
+import MallPageSearchRoute from "../MallPageSearchRoute";
 
 const Stack = createNativeStackNavigator()
 const LoginPageRoute = () => {
@@ -35,8 +37,8 @@ const LoginPageRoute = () => {
                             headerLeft: () => (
                                 <HeaderTitleLeft/>
                             )
-
-                    }}/>
+                        }}/>
+                    <Stack.Screen name="MallPageSearchPage" component={MallPageSearchRoute} options={{headerShown: false}}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </NativeBaseProvider>

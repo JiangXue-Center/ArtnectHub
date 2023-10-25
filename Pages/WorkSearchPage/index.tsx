@@ -27,8 +27,8 @@ const WorkSearchPage = ({navigation}: { navigation: any }) => {
     //发送请求去到作品详情页
     const goWorkDetailsPage = ({id}: { id: string, navigation: any }) => {
         //暂时注释
-        // goToWorkDetailsPageApi(id)
-        navigation.navigate("WorkDetailsPage");
+        goToWorkDetailsPageApi(id)
+        // navigation.navigate("WorkDetailsPage");
     }
     const Item = ({id, indexLink, authorId, userName, likes, authorAvatar}: pictureType) => {
         return (

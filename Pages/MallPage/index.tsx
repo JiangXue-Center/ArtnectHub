@@ -6,29 +6,30 @@ import {
     TouchableOpacity, Dimensions,
 } from 'react-native';
 import {Box, Divider, Image, Text, VStack} from "native-base";
-import MallPageStore, {pictureType} from "../../Stores/MallPageStore";
+import MallPageStore from "../../Stores/MallPageStore";
 import MallPageSwiper from "../../Layouts/MallPageSwiper";
+import {dataType} from "../../Stores/MallSearchDataStore";
 
 const MallPage = () => {
     const MallStore = MallPageStore.use.pictureList()
     const [isFresh, setIsFresh] = useState(false)
 
-    const Item = ({key, sources,textValue}: pictureType) => {
+    const Item = ({spuId, mainImage,businessId,subTitle,price,businessName,businessLogo}: dataType) => {
         return (
             <SafeAreaView>
                 <Box borderWidth="1" borderColor="gray.300" borderRadius="lg"
                      width={Dimensions.get("window").width / 2.2} margin={2}>
-                    <VStack divider={<Divider/>} height={250} key={key}>
+                    <VStack divider={<Divider/>} height={250} key={spuId}>
                         <Box>
                             <TouchableOpacity>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
-                                       source={{uri: sources}}
+                                       source={{uri: mainImage}}
                                 />
                             </TouchableOpacity>
                         </Box>
                         <Box alignItems="center" flex={1} justifyContent="center">
-                            <Text fontSize={20}>{textValue}</Text>
+                            <Text fontSize={20}>{subTitle}</Text>
                         </Box>
                     </VStack>
                 </Box>
@@ -37,7 +38,8 @@ const MallPage = () => {
     }
 
     const renderItem = ({item}: ({ item: any })) => (
-        <Item key={item.key} sources={item.sources} textValue={item.textValue}/>
+        <Item spuId={item.spuId} mainImage={item.mainImage} businessId={item.businessId} subTitle={item.subTitle}
+              price={item.price} businessName={item.businessName} businessLogo={item.businessLogo}/>
     );
 
     const isLoading = () => {
@@ -69,7 +71,7 @@ const MallPage = () => {
             <FlatList
                 data={MallStore}
                 renderItem={renderItem}
-                keyExtractor={item => item.key}
+                keyExtractor={item => item.spuId}
                 horizontal={false}//水平布局模式
                 initialScrollIndex={0}//初始化滚动索引
                 initialNumToRender={10}//让数据先加载三条，它会闪一下

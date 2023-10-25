@@ -28,7 +28,6 @@ const SearchRoute = ({navigation}: { navigation: any }) => {
                     //搜索框
                     headerRight: () => (<SearchHomePageComponent navigation={navigation}/>),
                 }}
-
             />
         </Stack.Navigator>
     )

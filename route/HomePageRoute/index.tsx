@@ -12,7 +12,6 @@ import MailPageDrawerRoute from "../MallPageDrawerRoute";
 
 const TabButtom = createBottomTabNavigator()
 
-
 const HomePageRoute = ({navigation}: { navigation: any }) => {
     return (
 

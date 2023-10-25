@@ -20,38 +20,37 @@ interface SearchScreenStoreType {
     increaseRecommendationHistory: (searchValue: string) => void
 }
 
-//首页搜索的store
-const SearchScreenStore = createSelectors(create<SearchScreenStoreType>()(persist((set) => ({
+const MallSearchScreenStore = createSelectors(create<SearchScreenStoreType>()(persist((set) => ({
 
-    searchValueList: [],
+        searchValueList: [],
 
-    recommendationHistory: [],
+        recommendationHistory: [],
 
-    increase: (searchValue) => set((state) => ({
-        searchValueList: [
-            ...state.searchValueList,
-            {
-                searchValue: searchValue
-            }
-        ],
+        increase: (searchValue) => set((state) => ({
+            searchValueList: [
+                ...state.searchValueList,
+                {
+                    searchValue: searchValue
+                }
+            ],
 
-    })),
+        })),
 
-    removeSearchValueList: () => set((state) => ({
-        searchValueList: []
-    })),
+        removeSearchValueList: () => set((state) => ({
+            searchValueList: []
+        })),
 
-    increaseRecommendationHistory: (searchValue) => set((state) => ({
-        recommendationHistory: [
-            ...state.recommendationHistory,
-            {
-                searchValue: searchValue
-            }
-        ]
+        increaseRecommendationHistory: (searchValue) => set((state) => ({
+            recommendationHistory: [
+                ...state.recommendationHistory,
+                {
+                    searchValue: searchValue
+                }
+            ]
 
-    })),
+        })),
     }), {
-    //将历史记录searchValueList保存到AsyncStorage
+        //将历史记录searchValueList保存到AsyncStorage
         name: "searchValueList",
         storage: createJSONStorage(() => AsyncStorage),
         partialize: state =>
@@ -63,4 +62,4 @@ const SearchScreenStore = createSelectors(create<SearchScreenStoreType>()(persis
     }
 )))
 
-export default SearchScreenStore
+export default MallSearchScreenStore

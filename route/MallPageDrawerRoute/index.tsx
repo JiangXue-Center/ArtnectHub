@@ -12,7 +12,6 @@ const MailPageDrawerRoute = () => {
     return (
         <Drawer.Navigator
             initialRouteName="MallPage"
-
             //drawerStyle可以给抽屉加样式
             screenOptions={{
                 drawerStyle: {
