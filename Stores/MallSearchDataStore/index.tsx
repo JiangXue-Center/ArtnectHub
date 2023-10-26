@@ -14,8 +14,6 @@ export interface dataType {
     price: string,
     //商店名
     businessName: string,
-    //商店logo
-    businessLogo: string
 }
 
 //搜索过后的商品
@@ -42,7 +40,7 @@ const MallSearchDataStore = createSelectors(create<MallSearchPageType>()((set) =
     swiperBusinessStoreData: [],
 
     //更新列表
-    axiosBusinessStoreData: ({spuId, mainImage, businessId, subTitle, price, businessName,businessLogo}) => set((state) => ({
+    axiosBusinessStoreData: ({spuId, mainImage, businessId, subTitle, price, businessName}) => set((state) => ({
         businessStoreData: [...state.businessStoreData, {
             spuId: spuId,
             mainImage: mainImage,
@@ -50,7 +48,6 @@ const MallSearchDataStore = createSelectors(create<MallSearchPageType>()((set) =
             subTitle: subTitle,
             price: price,
             businessName: businessName,
-            businessLogo: businessLogo
         }]
     })),
     //暂时用不到

@@ -15,7 +15,6 @@ const MallPageStore = createSelectors(create<MallPageStoreType>()((set) => ({
             subTitle: "啥也不是",
             price: "78",
             businessName: "什么东西",
-            businessLogo: "https://static.runoob.com/images/demo/demo3.jpg"
         },
         {
             spuId: "2",
@@ -24,7 +23,6 @@ const MallPageStore = createSelectors(create<MallPageStoreType>()((set) => ({
             subTitle: "啥也不是1",
             price: "78",
             businessName: "什么东西1",
-            businessLogo: "https://static.runoob.com/images/demo/demo3.jpg"
         }
     ],
 

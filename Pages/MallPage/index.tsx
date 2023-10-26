@@ -3,33 +3,44 @@ import {
     SafeAreaView,
     FlatList,
     StyleSheet,
-    TouchableOpacity, Dimensions,
+    TouchableOpacity, Dimensions, View,
 } from 'react-native';
 import {Box, Divider, Image, Text, VStack} from "native-base";
 import MallPageStore from "../../Stores/MallPageStore";
 import MallPageSwiper from "../../Layouts/MallPageSwiper";
 import {dataType} from "../../Stores/MallSearchDataStore";
+import {AntDesign, EvilIcons} from "@expo/vector-icons";
 
 const MallPage = () => {
     const MallStore = MallPageStore.use.pictureList()
     const [isFresh, setIsFresh] = useState(false)
 
-    const Item = ({spuId, mainImage,businessId,subTitle,price,businessName,businessLogo}: dataType) => {
+    const Item = ({spuId, mainImage, businessId, subTitle, price, businessName}: dataType) => {
         return (
             <SafeAreaView>
                 <Box borderWidth="1" borderColor="gray.300" borderRadius="lg"
                      width={Dimensions.get("window").width / 2.2} margin={2}>
-                    <VStack divider={<Divider/>} height={250} key={spuId}>
+                    <VStack divider={<Divider/>} key={spuId}>
                         <Box>
                             <TouchableOpacity>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: mainImage}}
+                                       alt="图片地址错误"
                                 />
                             </TouchableOpacity>
                         </Box>
-                        <Box alignItems="center" flex={1} justifyContent="center">
-                            <Text fontSize={20}>{subTitle}</Text>
+                        <Box>
+                            <Text>{subTitle}</Text>
+                            <Text color="red.400" fontSize="20">￥{price}</Text>
+                            <TouchableOpacity>
+                                <Box alignItems="center" m={1}>
+                                    <Box w="92%" backgroundColor="gray.200" justifyContent="space-between" flexDirection="row" alignItems="center" style={[styles.textType]}>
+                                        <Text id={businessId} fontSize={12}>{businessName}</Text>
+                                        <AntDesign name="right" size={10} color="black" />
+                                    </Box>
+                                </Box>
+                            </TouchableOpacity>
                         </Box>
                     </VStack>
                 </Box>
@@ -39,7 +50,7 @@ const MallPage = () => {
 
     const renderItem = ({item}: ({ item: any })) => (
         <Item spuId={item.spuId} mainImage={item.mainImage} businessId={item.businessId} subTitle={item.subTitle}
-              price={item.price} businessName={item.businessName} businessLogo={item.businessLogo}/>
+              price={item.price} businessName={item.businessName}/>
     );
 
     const isLoading = () => {
@@ -102,6 +113,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
     },
+    textType: {
+        borderRadius: 10,
+        padding: 2,
+    }
 });
 
 export default MallPage;
