@@ -1,22 +1,27 @@
-import {Dimensions, FlatList, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
-import MallPageStore from "../../Stores/MallPageStore";
-import React, {useState} from "react";
+import React, {useState} from 'react';
+import {
+    SafeAreaView,
+    FlatList,
+    StyleSheet,
+    TouchableOpacity, Dimensions,
+} from 'react-native';
 import {Box, Divider, Image, Text, VStack} from "native-base";
-import {dataType} from "../../Stores/MallSearchDataStore";
-import {AntDesign} from "@expo/vector-icons";
 
-const Surrounding = () => {
-    const MallStore = MallPageStore.use.pictureList()
+import {AntDesign} from "@expo/vector-icons";
+import MallSearchDataStore, {dataType} from "../../../Stores/MallSearchDataStore";
+
+const MallSearchAfterPage = ({navigation}:{navigation: any}) => {
+    const MallStore = MallSearchDataStore.use.businessStoreData()
     const [isFresh, setIsFresh] = useState(false)
 
-    const Item = ({spuId, mainImage,businessId,subTitle,price,businessName}: dataType) => {
+    const Item = ({spuId, mainImage, businessId, subTitle, price, businessName}: dataType) => {
         return (
             <SafeAreaView>
                 <Box borderWidth="1" borderColor="gray.300" borderRadius="lg"
                      width={Dimensions.get("window").width / 2.2} margin={2}>
                     <VStack divider={<Divider/>} key={spuId}>
                         <Box>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate("MallDetailsPage")}>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: mainImage}}
@@ -31,7 +36,7 @@ const Surrounding = () => {
                                 <Box alignItems="center" m={1}>
                                     <Box w="92%" backgroundColor="gray.200" justifyContent="space-between"
                                          flexDirection="row" alignItems="center" style={[styles.textType]}>
-                                        <Text id={businessId} fontSize={12}>{businessName}</Text>
+                                        <Text fontSize={12}>{businessName}</Text>
                                         <AntDesign name="right" size={10} color="black"/>
                                     </Box>
                                 </Box>
@@ -43,7 +48,9 @@ const Surrounding = () => {
         );
     }
 
-    const renderItem = ({item}: ({ item: any })) => (
+    const renderItem = ({item}: ({
+        item: any
+    })) => (
         <Item spuId={item.spuId} mainImage={item.mainImage} businessId={item.businessId} subTitle={item.subTitle}
               price={item.price} businessName={item.businessName}/>
     );
@@ -80,7 +87,7 @@ const Surrounding = () => {
                 keyExtractor={item => item.spuId}
                 horizontal={false}//水平布局模式
                 initialScrollIndex={0}//初始化滚动索引
-                initialNumToRender={3}//让数据先加载三条，它会闪一下
+                initialNumToRender={10}//让数据先加载三条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
                 //refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
@@ -113,4 +120,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Surrounding
+export default MallSearchAfterPage;

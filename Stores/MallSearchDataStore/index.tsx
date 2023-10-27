@@ -19,10 +19,15 @@ export interface dataType {
 //搜索过后的商品
 interface MallSearchPageType {
     searchValue: string
+    // 搜索后将searchValue进行更新
     update: (searchValue: string) => void
+    // 将商品放入businessStoreData，并且将data进行展示
     businessStoreData: dataType[]
+    // 轮播图，暂时用不到
     swiperBusinessStoreData: dataType[]
-    axiosBusinessStoreData: (picture: dataType) => void
+    // 通过这个函数将请求到的数据添加到businessStoreData里
+    axiosBusinessStoreData: (data: dataType) => void
+    // 请求轮播图的数据，暂时用不到
     axiosSwiperStore: (spuId: string, mainImage: string, businessId: string, subTitle: string, price: string, businessName: string,businessLogo: string) => void
 }
 

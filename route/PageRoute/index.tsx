@@ -12,21 +12,27 @@ import WorkDetailsPage from "../../Pages/HomePage/WorkDetailsPage/Components";
 import HeaderTitleLeft from "../../Pages/HomePage/WorkDetailsPage/Components/HeaderTitleLeft";
 import MallPageSearchPage from "../../Pages/MallPage/MallPageSearchPage";
 import MallPageSearchRoute from "../MallPageSearchRoute";
+import Token from "../../Token";
+import MallDetailsPage from "../../Pages/MallPage/MallDetailsPage";
 
 const Stack = createNativeStackNavigator()
 const LoginPageRoute = () => {
+    const {token} = Token()
     return (
         <NativeBaseProvider>
             <NavigationContainer>
                 <Stack.Navigator>
-                    <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+                    {token ?
+                        <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{headerShown: false}}/> :
+                        <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+                    }
                     <Stack.Screen name="PhoneLogin" component={CodeLogin} options={{headerShown: false}}/>
                     <Stack.Screen name="EmailLogin" component={PasswordLogin} options={{headerShown: false}}/>
                     <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{title: "重设密码"}}/>
                     <Stack.Screen name="RestPassword" component={RestPassword} options={{title: "设置密码"}}/>
                     <Stack.Screen name="Register" component={Register} options={{title: "注册"}}/>
                     <Stack.Screen name="NewPassword" component={NewPassword} options={{title: "重设密码"}}/>
-                    <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{headerShown: false}}/>
+                    {/*<Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{headerShown: false}}/>*/}
                     <Stack.Screen name="InformationPage" component={InformationPage} options={{title: "消息"}}/>
                     <Stack.Screen name="HomeSearchPage" component={SearchRoute} options={{headerShown: false}}/>
                     <Stack.Screen
@@ -38,7 +44,14 @@ const LoginPageRoute = () => {
                                 <HeaderTitleLeft/>
                             )
                         }}/>
-                    <Stack.Screen name="MallPageSearchPage" component={MallPageSearchRoute} options={{headerShown: false}}/>
+                    <Stack.Screen
+                        name="MallPageSearchPage"
+                        component={MallPageSearchRoute}
+                        options={{
+                            headerShown: false
+                    }}/>
+                    <Stack.Screen name="MallDetailsPage" component={MallDetailsPage} options={{title: "商品详情页"}}/>
+
                 </Stack.Navigator>
             </NavigationContainer>
         </NativeBaseProvider>

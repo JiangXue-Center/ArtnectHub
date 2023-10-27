@@ -17,9 +17,9 @@ const SearchMallPageApi = (navigation: any) => {
         //将搜索关键词存入store里
         updateData(searchValue)
         //跳转到商品搜索完的页面
-        // navigation.navigate("")
+        navigation.navigate("MallSearchAfterPage")
 
-        instance.get(`sh/keyword/${searchValue}`, {
+        instance.get(`inventory/keyword/${searchValue}`, {
             headers: {
                 'Authorization': token,
             }
@@ -33,9 +33,9 @@ const SearchMallPageApi = (navigation: any) => {
                     subTitle: item.subTitle,
                     price: item.price,
                     businessName: item.businessName,
-                    businessLogo: item.businessLogo
                 });
             });
+            console.log("responseData:"+responseData)
         }).catch(error => {
             console.error("error=" + error)
         })

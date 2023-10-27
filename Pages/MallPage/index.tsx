@@ -3,15 +3,15 @@ import {
     SafeAreaView,
     FlatList,
     StyleSheet,
-    TouchableOpacity, Dimensions, View,
+    TouchableOpacity, Dimensions,
 } from 'react-native';
 import {Box, Divider, Image, Text, VStack} from "native-base";
 import MallPageStore from "../../Stores/MallPageStore";
 import MallPageSwiper from "../../Layouts/MallPageSwiper";
 import {dataType} from "../../Stores/MallSearchDataStore";
-import {AntDesign, EvilIcons} from "@expo/vector-icons";
+import {AntDesign} from "@expo/vector-icons";
 
-const MallPage = () => {
+const MallPage = ({navigation}:{navigation: any}) => {
     const MallStore = MallPageStore.use.pictureList()
     const [isFresh, setIsFresh] = useState(false)
 
@@ -22,7 +22,7 @@ const MallPage = () => {
                      width={Dimensions.get("window").width / 2.2} margin={2}>
                     <VStack divider={<Divider/>} key={spuId}>
                         <Box>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate("MallDetailsPage")}>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: mainImage}}
@@ -32,12 +32,13 @@ const MallPage = () => {
                         </Box>
                         <Box>
                             <Text>{subTitle}</Text>
-                            <Text color="red.400" fontSize="20">￥{price}</Text>
+                            <Text color="red.600" fontSize="20">￥{price}</Text>
                             <TouchableOpacity>
                                 <Box alignItems="center" m={1}>
-                                    <Box w="92%" backgroundColor="gray.200" justifyContent="space-between" flexDirection="row" alignItems="center" style={[styles.textType]}>
+                                    <Box w="92%" backgroundColor="gray.200" justifyContent="space-between"
+                                         flexDirection="row" alignItems="center" style={[styles.textType]}>
                                         <Text id={businessId} fontSize={12}>{businessName}</Text>
-                                        <AntDesign name="right" size={10} color="black" />
+                                        <AntDesign name="right" size={10} color="black"/>
                                     </Box>
                                 </Box>
                             </TouchableOpacity>
@@ -48,7 +49,9 @@ const MallPage = () => {
         );
     }
 
-    const renderItem = ({item}: ({ item: any })) => (
+    const renderItem = ({item}: ({
+        item: any
+    })) => (
         <Item spuId={item.spuId} mainImage={item.mainImage} businessId={item.businessId} subTitle={item.subTitle}
               price={item.price} businessName={item.businessName}/>
     );

@@ -57,7 +57,6 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                                     alt="同画"
                                     //解决图片缓存问题
                                     resizeMethod="resize"
-
                                 />
                                 <Text>{userName}</Text>
                             </View>
