@@ -32,7 +32,6 @@ const LoginPageRoute = () => {
                     <Stack.Screen name="RestPassword" component={RestPassword} options={{title: "设置密码"}}/>
                     <Stack.Screen name="Register" component={Register} options={{title: "注册"}}/>
                     <Stack.Screen name="NewPassword" component={NewPassword} options={{title: "重设密码"}}/>
-                    {/*<Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{headerShown: false}}/>*/}
                     <Stack.Screen name="InformationPage" component={InformationPage} options={{title: "消息"}}/>
                     <Stack.Screen name="HomeSearchPage" component={SearchRoute} options={{headerShown: false}}/>
                     <Stack.Screen
