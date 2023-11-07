@@ -1,9 +1,9 @@
-import instance from "../../service/http/Request";
 import DetermineInputType from "../../components/VerificationCode/DetermineInputTypeCode";
+import Request from "../../service/http/Request";
 
 //请求验证码
 const LoginSendCodeApi = ({certificate}: { certificate: string }) => {
-
+    const {instance} = Request()
     const method = DetermineInputType(certificate)
 
     console.log("certificate:" + certificate)

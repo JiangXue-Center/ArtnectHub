@@ -3,35 +3,40 @@ import Swiper from 'react-native-swiper'
 import {Image} from "native-base";
 import {useEffect} from "react";
 import AttentionScreenPicturesStore from "../../../../Stores/AttentionScreenPicturesStore";
+import MallStore from "../../../../Stores/MallPageStore/MallStore";
 
 //商城详情页的轮播图和商品介绍
 const {width} = Dimensions.get("window")
 const SpuBaseInfo = () => {
-    const swiperStore = AttentionScreenPicturesStore.use.swiperPictures()
-    const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()
+    // const mallStore = MallStore.use.data()
+    const spuBaseInfo = MallStore.use.data().spuBaseInfo
 
     return (
         <View>
-            <Swiper
-                showsButtons={false}
-                autoplay={false}
-                style={styles.container}
-                loop={true}
-            >
-                {swiperStore.map((item) => (
-                    <View key={item.id}>
-                        <Image size={200} width={width} source={{uri: item.indexLink}} alt="图片资源缺失:mainImages"/>
-                    </View>
-                ))}
-            </Swiper>
+            {/*<Swiper*/}
+            {/*    showsButtons={false}*/}
+            {/*    autoplay={false}*/}
+            {/*    style={styles.container}*/}
+            {/*    loop={true}*/}
+            {/*>*/}
+                {/*{spuBaseInfo.map((item) => (*/}
+                {/*    <View key={item.id}>*/}
+                {/*        <Image size={200} width={width} source={{uri: item.indexLink}} alt="图片资源缺失:mainImages"/>*/}
+                {/*    </View>*/}
+                {/*))}*/}
+                <View>
+                    <Image size={200} width={width} source={{uri: spuBaseInfo.spuImages}} alt="图片资源缺失:mainImages"/>
+                </View>
+
+            {/*</Swiper>*/}
             <View style={[styles.textContainer]}>
                 <View style={[styles.textContainer1]}>
                     {/*prices*/}
-                    <Text style={[styles.text1]}>￥15</Text>
+                    <Text style={[styles.text1]}>￥{spuBaseInfo.price}</Text>
                     <Text style={[styles.text2]}>起</Text>
                 </View>
                 <Text style={[styles.text3]}>
-                    title:专家级画师的专属画笔，你值得拥有
+                    {spuBaseInfo.title}
                 </Text>
             </View>
         </View>

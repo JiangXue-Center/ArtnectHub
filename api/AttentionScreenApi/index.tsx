@@ -1,7 +1,8 @@
-import instance from "../../service/http/Request";
+import Request from "../../service/http/Request";
 import AttentionScreenPicturesStore from "../../Stores/AttentionScreenPicturesStore";
 import Token from "../../Token";
 import WorkDetailsStore from "../../Stores/WorkDetailsStore";
+import useSWR from "swr";
 
 const AttentionScreenApi = (navigation: any) => {
     const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()
@@ -9,6 +10,7 @@ const AttentionScreenApi = (navigation: any) => {
     const {token} = Token()
     const updateStore = WorkDetailsStore.use.update()
     const store = WorkDetailsStore.use.pictures()
+    const {instance} = Request()
 
     //轮播图的请求
     const swiperPictureApi = () => {
@@ -37,10 +39,38 @@ const AttentionScreenApi = (navigation: any) => {
                     authorAvatar: item.authorAvatar,
                 });
             });
-
         }).catch(error => {
             console.error("error=" + error)
         })
+
+        // const {data,error,mutate} = useSWR("artwork/index", (url: string) => instance.get(url, {
+        //         headers: {
+        //             "Authorization": token
+        //         }
+        //     }).then(response => {
+        //         const responseData = response.data.data
+        //         responseData.forEach((item: any) => {
+        //             picturesAxios({
+        //                 id: item.id,
+        //                 indexLink: item.indexLink,
+        //                 authorId: item.authorId,
+        //                 userName: item.username,
+        //                 likes: item.likes,
+        //                 authorAvatar: item.authorAvatar,
+        //             });
+        //         });
+        //     }).catch(error => {
+        //         console.error("error:" + error)
+        //     })
+        // )
+        //
+        // return {
+        //     data,
+        //     error,
+        //     isLoading: !error || !data,
+        //     reload: mutate
+        // }
+
     }
 
     const goToWorkDetailsPageApi = async (id: string) => {
@@ -69,10 +99,7 @@ const AttentionScreenApi = (navigation: any) => {
         } catch (error) {
             console.error("error:" + error);
         }
-
-        // navigation.navigate("WorkDetailsPage");
     };
-
 
 
     return {swiperPictureApi, picturesApi, goToWorkDetailsPageApi}

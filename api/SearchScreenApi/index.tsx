@@ -1,10 +1,10 @@
-import instance from "../../service/http/Request";
 import useLoginPageStore from "../../Stores/LoginPageStore";
 import SearchScreenStore from "../../Stores/SearchScreenStore";
 import WorkSearchPageStore from "../../Stores/WorkSearchPageStore";
 import Token from "../../Token";
 import WorkDetailsStore from "../../Stores/WorkDetailsStore";
 import {useState} from "react";
+import Request from "../../service/http/Request";
 
 //首页的搜索框请求
 const SearchScreenApi = (navigation: any) => {
@@ -13,6 +13,7 @@ const SearchScreenApi = (navigation: any) => {
     const {token} = Token()
     const updateData = WorkSearchPageStore.use.update()
     const [num, setNum] = useState(1)
+    const {instance} = Request()
 
 
     //点击搜索然后请求

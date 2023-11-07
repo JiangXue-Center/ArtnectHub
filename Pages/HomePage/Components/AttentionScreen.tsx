@@ -4,7 +4,7 @@ import {
     FlatList,
     StyleSheet,
     Text,
-    TouchableOpacity, Dimensions, View,
+    TouchableOpacity, Dimensions, View, Alert,
 } from 'react-native';
 import AttentionScreenPicturesStore, {pictureType} from "../../../Stores/AttentionScreenPicturesStore";
 import {Box, Divider, Image, VStack} from "native-base";
@@ -79,11 +79,10 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
     const isLoading = () => {
         //开启加载动画
         setIsFresh(true)
-        console.log(11111111)
         //暂时注释
         // //推荐部分请求
         picturesApi()
-        console.log("cardStore=" + JSON.stringify(cardStore))
+        Alert.alert("正在发送请求")
     }
 
     const refreshUp = () => {
@@ -118,6 +117,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                 onEndReachedThreshold={0.1}//触底比率，0.1表示距离底部还有10%
                 onEndReached={() => refreshUp()}
             />
+
         </SafeAreaView>
     );
 }

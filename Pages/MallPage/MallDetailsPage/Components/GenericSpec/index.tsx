@@ -1,16 +1,25 @@
-import {Dimensions, StyleSheet, TouchableOpacity, View} from "react-native";
-import {AntDesign, Feather, Ionicons} from "@expo/vector-icons";
-import {Box, Button, Divider, Modal, Text, VStack} from "native-base";
-import {useState} from "react";
-
+import {Dimensions, StyleSheet, TouchableOpacity} from "react-native";
+import {AntDesign, Feather} from "@expo/vector-icons";
+import {Actionsheet, Box, Divider, Text, useDisclose, VStack} from "native-base";
 
 const {width, height} = Dimensions.get("window")
-const GenericSpec = () => {
-    const [open, setOpen] = useState(false);
 
-    const openModal = () => {
-        setOpen(true);
+//款式 · 适用年龄 · 主要材质 · 尺码
+const GenericSpec = () => {
+    const {
+        isOpen,
+        onOpen,
+        onClose
+    } = useDisclose();
+
+    const myObject = {
+        "材质": {
+            "笔杆材质": "雷击木",
+            "刷毛材质": "优质马毛刷毛"
+        }
     };
+    // const materialName = Object.keys(myObject.材质)[1]; // 获取对象的属性名称
+
 
     return (
         <Box m="4" flexDirection="row">
@@ -19,44 +28,68 @@ const GenericSpec = () => {
                 {/*genericSpec*/}
                 <Text ml="4">款式 · 适用年龄 · 主要材质 · 尺码</Text>
             </Box>
-            <TouchableOpacity onPress={() => openModal()}>
+            <TouchableOpacity onPress={() => onOpen()}>
                 <Feather name="chevron-right" size={24} color="black"/>
             </TouchableOpacity>
 
-            <Modal isOpen={open} onClose={() => setOpen(false)} safeAreaTop={true}>
-                <Modal.Content style={[styles.bottom]}>
-                    <Modal.CloseButton/>
-                    <Modal.Header>产品参数</Modal.Header>
-                    <Modal.Body>
-                        <Box>
+            <Actionsheet isOpen={isOpen} onClose={onClose}>
+                <Actionsheet.Content>
+                    <Box w="100%" h="100%" px={4}>
+                        <Box alignItems="center">
+                            <Text fontSize="16">
+                                产品参数
+                            </Text>
+                        </Box>
+
+                        <Box mt={8}>
                             <VStack divider={<Divider/>}>
-                                <Box p={4} flexDirection="row">
-                                    <Text>材质</Text>
-                                    <Text pl={8}>笔杆材质：</Text>
+                                <Box mt="4" mb="4">
+                                    <Box flexDirection="row">
+                                        <Box>
+                                            <Text>笔杆材质</Text>
+                                        </Box>
+                                        <Box ml="10">
+                                            <Text>雷击木</Text>
+                                        </Box>
+                                    </Box>
                                 </Box>
-                                <Box p={4}>
-                                    22284yur928uwe8rqwoeurqwoieurowiueoiquweiuqioweuroqieqo
+
+                                <Box mt="4" mb="4">
+                                    <Box flexDirection="row">
+                                        <Box>
+                                            <Text>笔杆材质</Text>
+                                        </Box>
+                                        <Box ml="10">
+                                            <Text>雷击木</Text>
+                                        </Box>
+                                    </Box>
                                 </Box>
-                                <Divider/>
+                                <Box mt="4" mb="4">
+                                    <Box flexDirection="row">
+                                        <Box>
+                                            <Text>笔杆材质</Text>
+                                        </Box>
+                                        <Box ml="10">
+                                            <Text>雷击木</Text>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                                <Box mt="4" mb="4">
+                                    <Box flexDirection="row">
+                                        <Box>
+                                            <Text>笔杆材质</Text>
+                                        </Box>
+                                        <Box ml="10">
+                                            <Text>雷击木</Text>
+                                        </Box>
+                                    </Box>
+                                </Box>
                             </VStack>
                         </Box>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button.Group space={2}>
-                            <Button variant="ghost" colorScheme="blueGray" onPress={() => {
-                                setOpen(false);
-                            }}>
-                                Cancel
-                            </Button>
-                            <Button onPress={() => {
-                                setOpen(false);
-                            }}>
-                                Save
-                            </Button>
-                        </Button.Group>
-                    </Modal.Footer>
-                </Modal.Content>
-            </Modal>
+                    </Box>
+
+                </Actionsheet.Content>
+            </Actionsheet>
         </Box>
     )
 }

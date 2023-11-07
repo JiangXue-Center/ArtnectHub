@@ -1,8 +1,10 @@
 import useLoginPageStore from "../../Stores/LoginPageStore";
-import instance from "../../service/http/Request";
+import Request from "../../service/http/Request";
+
 
 const LoginApi = () => {
     const {setToken} = useLoginPageStore()
+    const {instance} = Request()
     //验证码登陆
     const codeLoginMethod = ({data, method, navigation}: { data: any, method: string, navigation: any }) => {
         console.log("data=" + data.certificate)

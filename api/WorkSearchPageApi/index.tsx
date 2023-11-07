@@ -1,13 +1,14 @@
-import instance from "../../service/http/Request";
 import Token from "../../Token";
 import WorkDetailsStore from "../../Stores/WorkDetailsStore";
 import WorkSearchPageStore from "../../Stores/WorkSearchPageStore";
+import Request from "../../service/http/Request";
 
 const WorkSearchPageApi = (navigation: any) => {
     const picturesAxios = WorkSearchPageStore.use.axiosPictures()
     const {token} = Token()
     const updateStore = WorkDetailsStore.use.update()
     const store = WorkDetailsStore.use.pictures()
+    const {instance} = Request()
 
     //轮播图的请求
     const swiperPictureApi = () => {

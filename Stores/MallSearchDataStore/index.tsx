@@ -16,6 +16,10 @@ export interface dataType {
     businessName: string,
 }
 
+interface updateStoreType {
+    data: dataType[]
+}
+
 //搜索过后的商品
 interface MallSearchPageType {
     searchValue: string
@@ -27,6 +31,8 @@ interface MallSearchPageType {
     swiperBusinessStoreData: dataType[]
     // 通过这个函数将请求到的数据添加到businessStoreData里
     axiosBusinessStoreData: (data: dataType) => void
+    //通过这个函数将请求到的数据更新到这里
+
     // 请求轮播图的数据，暂时用不到
     axiosSwiperStore: (spuId: string, mainImage: string, businessId: string, subTitle: string, price: string, businessName: string,businessLogo: string) => void
 }
@@ -55,6 +61,8 @@ const MallSearchDataStore = createSelectors(create<MallSearchPageType>()((set) =
             businessName: businessName,
         }]
     })),
+
+
     //暂时用不到
     axiosSwiperStore: (spuId: string, mainImage: string, businessId: string, subTitle: string, price: string, businessName: string,businessLogo:string) => set((state) => ({
         swiperBusinessStoreData: [...state.swiperBusinessStoreData, {

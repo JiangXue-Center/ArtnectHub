@@ -1,7 +1,7 @@
-import instance from "../../service/http/Request";
 import Token from "../../Token";
 import MallSearchScreenStore from "../../Stores/MallSearchPageStore";
 import MallSearchDataStore from "../../Stores/MallSearchDataStore";
+import Request from "../../service/http/Request";
 
 //首页的搜索框请求
 const SearchMallPageApi = (navigation: any) => {
@@ -9,6 +9,7 @@ const SearchMallPageApi = (navigation: any) => {
     const dataAxios = MallSearchDataStore.use.axiosBusinessStoreData()
     const {token} = Token()
     const updateData = MallSearchDataStore.use.update()
+    const {instance} = Request()
 
     //点击搜索然后请求
     const sendSearchValueHttp = (searchValue: string) => {

@@ -1,7 +1,7 @@
 //失败提示
 import {Alert} from "react-native";
 
-export const ErrorTipApi = (err:any) => {
+export const ErrorTip = (err:any) => {
     if (err && err.response) {
         switch (err.response.status) {
             case 400:
@@ -25,7 +25,7 @@ export const ErrorTipApi = (err:any) => {
                 break;
 
             case 500:
-                Alert.alert("服务器内部错误");
+                Alert.alert("服务器繁忙，请联系管理员");
                 break;
 
             case 501:
