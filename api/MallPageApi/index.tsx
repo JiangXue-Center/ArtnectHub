@@ -14,11 +14,8 @@ const MallPageApi = ({navigation}: {navigation: any}) => {
           }
       })
           .then(response => {
-              // console.log(response)
-
               addData(response.data.data)
               navigation.navigate("MallDetailsPage")
-              // console.log("data:"+JSON.stringify(response.data.data))
           }).catch(error => {
           console.error(error)
       })

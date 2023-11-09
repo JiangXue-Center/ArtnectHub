@@ -82,7 +82,6 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
         //暂时注释
         // //推荐部分请求
         picturesApi()
-        Alert.alert("正在发送请求")
     }
 
     const refreshUp = () => {
@@ -113,7 +112,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                 // refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
                 refreshing={isFresh}
                 onRefresh={() => isLoading()}
-                // 上拉刷新,
+                // 上拉刷新
                 onEndReachedThreshold={0.1}//触底比率，0.1表示距离底部还有10%
                 onEndReached={() => refreshUp()}
             />

@@ -43,16 +43,6 @@ const GenericSpec = () => {
 
                         <Box mt={8}>
                             <VStack divider={<Divider/>}>
-                                <Box mt="4" mb="4">
-                                    <Box flexDirection="row">
-                                        <Box>
-                                            <Text>笔杆材质</Text>
-                                        </Box>
-                                        <Box ml="10">
-                                            <Text>雷击木</Text>
-                                        </Box>
-                                    </Box>
-                                </Box>
 
                                 <Box mt="4" mb="4">
                                     <Box flexDirection="row">
@@ -64,26 +54,7 @@ const GenericSpec = () => {
                                         </Box>
                                     </Box>
                                 </Box>
-                                <Box mt="4" mb="4">
-                                    <Box flexDirection="row">
-                                        <Box>
-                                            <Text>笔杆材质</Text>
-                                        </Box>
-                                        <Box ml="10">
-                                            <Text>雷击木</Text>
-                                        </Box>
-                                    </Box>
-                                </Box>
-                                <Box mt="4" mb="4">
-                                    <Box flexDirection="row">
-                                        <Box>
-                                            <Text>笔杆材质</Text>
-                                        </Box>
-                                        <Box ml="10">
-                                            <Text>雷击木</Text>
-                                        </Box>
-                                    </Box>
-                                </Box>
+
                             </VStack>
                         </Box>
                     </Box>

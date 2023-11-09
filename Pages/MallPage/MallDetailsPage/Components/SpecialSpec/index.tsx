@@ -40,31 +40,38 @@ const SpecialSpec = () => {
                 <Actionsheet.Content>
 
                     <Box>
-                        <Box w={width} h={height/8}>
+                        <Box w={width} h={height / 8}>
                             {
                                 skuBaseInfos.map((item, index) => (
-                                    <Box flexDirection="row" key={index}>
-                                        <Box borderRadius="10" bg="gray.100" w={width / 4} m={2}>
-                                            <Image
-                                                key={index}
-                                                source={{uri: item.image}}
-                                                alt="图片"
-                                                size="32"
-                                                w={width / 4}
-                                                h={height / 10}
-                                                resizeMode="contain"
-                                                display={index === getIndexOf ? "flex" : "none"}
-                                            />
-                                        </Box>
-                                        <Box justifyContent="flex-end" ml={4}>
-                                            <Text display={index === getIndexOf ? "flex" : "none"}
-                                                  fontWeight="bold"
-                                                  color="red.500"
-                                                  fontSize="20"
-                                            >￥{item.price}</Text>
-                                        </Box>
+                                    <Box>
+                                        {index === getIndexOf?
+                                            <Box flexDirection="row" key={index}>
+                                                <Box borderRadius="10" bg="gray.100" w={width / 4} m={2}>
+                                                    <Image
+                                                        key={index}
+                                                        source={{uri: item.image}}
+                                                        alt="图片"
+                                                        size="32"
+                                                        w={width / 4}
+                                                        h={height / 10}
+                                                        resizeMode="contain"
+                                                        display={index === getIndexOf ? "flex" : "none"}
+                                                    />
+                                                </Box>
+                                                <Box justifyContent="flex-end" ml={4}>
+                                                    <Text display={index === getIndexOf ? "flex" : "none"}
+                                                          fontWeight="bold"
+                                                          color="red.500"
+                                                          fontSize="20"
+                                                    >￥{item.price}</Text>
+                                                </Box>
+                                            </Box>:
+                                            <Box></Box>
+                                        }
                                     </Box>
                                 ))
+
+
                             }
                         </Box>
                         <Box flex="1" position="relative">

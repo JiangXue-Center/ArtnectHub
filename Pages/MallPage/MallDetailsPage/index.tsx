@@ -6,6 +6,7 @@ import MallDetailsPageFoot from "./Components/MallDetailsPageFoot";
 import {Box} from "native-base";
 import MallStore from "../../../Stores/MallPageStore/MallStore";
 import {useEffect} from "react";
+import Description from "./Components/Description";
 
 // const data = {
 //     business: {
@@ -79,6 +80,8 @@ const MallDetailsPage = () => {
                 <Detail/>
                 {/*商店*/}
                 <Business/>
+                {/*描述*/}
+                <Description/>
             </ScrollView>
             {/*商店页脚部分*/}
             <Box position="fixed">

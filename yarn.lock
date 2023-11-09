@@ -7019,6 +7019,11 @@ react-native-tab-view@^3.5.2:
   dependencies:
     use-latest-callback "^0.1.5"
 
+react-native-typography@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-typography/-/react-native-typography-1.4.1.tgz#2d05cb5935a2f7fdb6b43bbde93d60f1324578e3"
+  integrity sha512-dc9Zfs4jUdq4ygx4/KwO6jKTERBu6cRrfPJGntw/pA+D6BMjlWfMNuhZ/69vf4Zpsnt9s4AGe+Z/V1QFYaCXAA==
+
 react-native-vector-icons@^10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-10.0.0.tgz"

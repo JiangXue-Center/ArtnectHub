@@ -1,62 +1,43 @@
-import {Dimensions, StyleSheet, TouchableOpacity, View} from "react-native";
+import {Dimensions, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
 import { Feather, Ionicons} from "@expo/vector-icons";
-import {Box, Button, Modal, Text} from "native-base";
+import {Actionsheet, Box, Button, Divider, Image, Modal, Text, useDisclose, VStack} from "native-base";
 import {useState} from "react";
+import MallStore from "../../../../../Stores/MallPageStore/MallStore";
+import {material} from "react-native-typography";
 
 
 const {width, height} = Dimensions.get("window")
 const AfterService = () => {
-    const [open, setOpen] = useState(false);
+    const {
+        isOpen,
+        onOpen,
+        onClose
+    } = useDisclose();
 
-    const openModal = () => {
-        setOpen(true);
-    };
-
+    const afterService = MallStore.use.data().detail.afterService
     return (
         <Box m="4" flexDirection="row">
             <Ionicons name="heart-outline" size={24} color="black"/>
             <Box w={width / 1.4}>
                 {/*afterService*/}
-                <Text ml="4">我们提供60天无条件退货。如有问题，请联系我们的客服。</Text>
+                <Text ml="4">{afterService}</Text>
             </Box>
-            <TouchableOpacity onPress={() => openModal()}>
+            <TouchableOpacity onPress={() => onOpen()}>
                 <Feather name="chevron-right" size={24} color="black"/>
             </TouchableOpacity>
 
-            <Modal isOpen={open} onClose={() => setOpen(false)} safeAreaTop={true}>
-                <Modal.Content maxWidth="350" style={[styles.bottom]}>
-                    <Modal.CloseButton />
-                    <Modal.Header>60天退货无理由</Modal.Header>
-                    <Modal.Body>
+            <Actionsheet isOpen={isOpen} onClose={onClose}>
+                <Actionsheet.Content>
+                    <Box>
+                        <Box w={width} h={height}>
+                            <Text m={4} style={material.caption}>{afterService}</Text>
+                        </Box>
+                    </Box>
+                </Actionsheet.Content>
+            </Actionsheet>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button.Group space={2}>
-                            <Button variant="ghost" colorScheme="blueGray" onPress={() => {
-                                setOpen(false);
-                            }}>
-                                Cancel
-                            </Button>
-                            <Button onPress={() => {
-                                setOpen(false);
-                            }}>
-                                Save
-                            </Button>
-                        </Button.Group>
-                    </Modal.Footer>
-                </Modal.Content>
-            </Modal>
         </Box>
     )
 }
 
 export default AfterService
-
-const styles = StyleSheet.create({
-    bottom: {
-        marginBottom: 0,
-        marginTop: "auto",
-        height: height,
-        width: width
-    },
-})

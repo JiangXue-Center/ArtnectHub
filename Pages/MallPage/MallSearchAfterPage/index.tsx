@@ -10,6 +10,7 @@ import {Box, Divider, Image, Text, VStack} from "native-base";
 import {AntDesign} from "@expo/vector-icons";
 import MallSearchDataStore, {dataType} from "../../../Stores/MallSearchDataStore";
 import MallPageApi from "../../../api/MallPageApi";
+import {material} from "react-native-typography";
 
 //商品搜索后界面
 const MallSearchAfterPage = ({navigation}:{navigation: any}) => {
@@ -33,13 +34,13 @@ const MallSearchAfterPage = ({navigation}:{navigation: any}) => {
                             </TouchableOpacity>
                         </Box>
                         <Box>
-                            <Text>{subTitle}</Text>
+                            <Text style={material.body2}>{subTitle}</Text>
                             <Text color="red.600" fontSize="20">￥{price}</Text>
                             <TouchableOpacity>
                                 <Box alignItems="center" m={1}>
                                     <Box w="92%" backgroundColor="gray.200" justifyContent="space-between"
                                          flexDirection="row" alignItems="center" style={[styles.textType]}>
-                                        <Text fontSize={12}>{businessName}</Text>
+                                        <Text style={material.caption}>{businessName}</Text>
                                         <AntDesign name="right" size={10} color="black"/>
                                     </Box>
                                 </Box>

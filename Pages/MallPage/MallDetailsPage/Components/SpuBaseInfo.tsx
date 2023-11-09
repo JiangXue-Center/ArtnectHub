@@ -4,6 +4,7 @@ import {Image} from "native-base";
 import {useEffect} from "react";
 import AttentionScreenPicturesStore from "../../../../Stores/AttentionScreenPicturesStore";
 import MallStore from "../../../../Stores/MallPageStore/MallStore";
+import {material, systemWeights} from "react-native-typography";
 
 //商城详情页的轮播图和商品介绍
 const {width} = Dimensions.get("window")
@@ -35,7 +36,7 @@ const SpuBaseInfo = () => {
                     <Text style={[styles.text1]}>￥{spuBaseInfo.price}</Text>
                     <Text style={[styles.text2]}>起</Text>
                 </View>
-                <Text style={[styles.text3]}>
+                <Text style={[material.title,systemWeights.bold]}>
                     {spuBaseInfo.title}
                 </Text>
             </View>
@@ -65,7 +66,6 @@ const styles = StyleSheet.create({
         margin: 8
     },
     text3: {
-        fontSize: 20,
         fontWeight: "bold"
     },
     textContainer: {

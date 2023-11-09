@@ -35,7 +35,6 @@ const Detail = () => {
                 <SpecialSpec/>
                 {/*材质样式等等*/}
                 <GenericSpec/>
-
             </VStack>
         </Box>
     )
