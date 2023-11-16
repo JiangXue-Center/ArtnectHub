@@ -46,7 +46,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                             </TouchableOpacity>
                         </Box>
                         <Box px="4" pb="4" flexDirection="row" justifyContent="space-between"
-                             alignItems="center">
+                             alignItems="center" borderRadius={100}>
                             <View>
                                 <Image
                                     size={30}
@@ -54,7 +54,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
                                     // resizeMode="contain"解决图片显示不全的方法
                                     resizeMode="contain"
                                     source={{uri: authorAvatar}}
-                                    alt="同画"
+                                    // alt="同画"
                                     //解决图片缓存问题
                                     resizeMethod="resize"
                                 />
@@ -98,7 +98,7 @@ const AttentionScreen = ({navigation}: { navigation: any }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            {/*<AttentionSwiper navigation={navigation}/>*/}
+
             <FlatList
                 data={cardStore}
                 renderItem={renderItem}

@@ -10,10 +10,12 @@ import MallPageStore from "../../Stores/MallPageStore";
 import MallPageSwiper from "../../Layouts/MallPageSwiper";
 import {dataType} from "../../Stores/MallSearchDataStore";
 import {AntDesign} from "@expo/vector-icons";
+import MallPageApi from "../../api/MallPageApi";
 
 const MallPage = ({navigation}:{navigation: any}) => {
-    const MallStore = MallPageStore.use.pictureList()
+    const MallStore = MallPageStore.use.businessStoreData()
     const [isFresh, setIsFresh] = useState(false)
+    const [mallApi] = MallPageApi({navigation})
 
     const Item = ({spuId, mainImage, businessId, subTitle, price, businessName}: dataType) => {
         return (
@@ -22,7 +24,7 @@ const MallPage = ({navigation}:{navigation: any}) => {
                      width={Dimensions.get("window").width / 2.2} margin={2}>
                     <VStack divider={<Divider/>} key={spuId}>
                         <Box>
-                            <TouchableOpacity onPress={() => navigation.navigate("MallDetailsPage")}>
+                            <TouchableOpacity onPress={() => mallApi(spuId)}>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: mainImage}}
