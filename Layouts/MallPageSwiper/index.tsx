@@ -6,7 +6,8 @@ import {useEffect, useState} from "react";
 import instance from "../../service/http/Request";
 import AttentionScreenApi from "../../api/AttentionScreenApi";
 import ImageViewer from "react-native-image-zoom-viewer";
-import {log} from "expo-updates/build-cli/utils/log";
+import ImageViewerComponent from "../../components/ImageViewerComponent";
+import useImageVieWerIsTrueStore from "../../Stores/ImageViewerIsTrue";
 
 //商城首页轮播图
 const {width} = Dimensions.get("window")
@@ -14,8 +15,11 @@ const MallPageSwiper = () => {
     const swiperStore = AttentionScreenPicturesStore.use.swiperPictures()
     const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()
     // const {swiperPictureApi} = AttentionScreenApi()
+
+    // const [isTrue,setIsTrue] = useState(false)
     const [zoomImage, setZoomImage] = useState([{url: ""}])
-    const [isTrue,setIsTrue] = useState(false)
+    const setIsTrue = useImageVieWerIsTrueStore.use.updateIsTrue()
+
 
     useEffect(() => {
         //暂时注释
@@ -24,9 +28,7 @@ const MallPageSwiper = () => {
         const formattedImages = swiperStore.map(item => ({
             url: item.indexLink
         }))
-
         setZoomImage(formattedImages)
-
     }, []);
 
     return (
@@ -46,18 +48,8 @@ const MallPageSwiper = () => {
                 ))}
 
             </Swiper>
-
-            <Modal visible={isTrue} transparent={false}>
-                <ImageViewer
-                    imageUrls={zoomImage}
-                    enableImageZoom={true}
-                    saveToLocalByLongPress={true}
-                    enableSwipeDown={false}
-                    menuContext={{ "saveToLocal": "保存图片", "cancel": "取消" }}
-                    onClick={() => setIsTrue(false)}
-                    enablePreload
-                />
-            </Modal>
+            {/*图片放大功能*/}
+            <ImageViewerComponent zoomImage={zoomImage}/>
         </View>
     )
 }

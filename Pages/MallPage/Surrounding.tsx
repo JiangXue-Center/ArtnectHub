@@ -6,7 +6,7 @@ import {dataType} from "../../Stores/MallSearchDataStore";
 import {AntDesign} from "@expo/vector-icons";
 
 const Surrounding = () => {
-    const MallStore = MallPageStore.use.pictureList()
+    const MallStore = MallPageStore.use.businessStoreData()
     const [isFresh, setIsFresh] = useState(false)
 
     const Item = ({spuId, mainImage,businessId,subTitle,price,businessName}: dataType) => {

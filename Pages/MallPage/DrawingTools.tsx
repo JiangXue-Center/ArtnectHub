@@ -1,13 +1,23 @@
 import {Dimensions, FlatList, SafeAreaView, StyleSheet, TouchableOpacity, View} from "react-native";
 import MallPageStore from "../../Stores/MallPageStore";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Box, Divider, Image, Text, VStack} from "native-base";
 import {dataType} from "../../Stores/MallSearchDataStore";
 import {AntDesign} from "@expo/vector-icons";
+import ImageViewerComponent from "../../components/ImageViewerComponent";
+import useImageVieWerIsTrueStore from "../../Stores/ImageViewerIsTrue";
 
 const DrawingTools = () => {
-    const MallStore = MallPageStore.use.pictureList()
+    const MallStore = MallPageStore.use.businessStoreData()
     const [isFresh, setIsFresh] = useState(false)
+    const [zoomImage, setZoomImage] = useState([{url: ""}])
+    const setIsTrue = useImageVieWerIsTrueStore.use.updateIsTrue()
+    useEffect(() => {
+        const formattedImages = MallStore.map(item => ({
+            url: item.mainImage
+        }))
+        setZoomImage(formattedImages)
+    },[])
 
     const Item = ({spuId, mainImage,businessId,subTitle,price,businessName}: dataType) => {
         return (
@@ -16,7 +26,7 @@ const DrawingTools = () => {
                      width={Dimensions.get("window").width / 2.2} margin={2}>
                     <VStack divider={<Divider/>} key={spuId}>
                         <Box>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => setIsTrue(true)}>
                                 <Image size={100} height={200}
                                        width={Dimensions.get("window").width / 2.1}
                                        source={{uri: mainImage}}
@@ -24,6 +34,10 @@ const DrawingTools = () => {
                                 />
                             </TouchableOpacity>
                         </Box>
+
+                        {/*图片放大功能*/}
+                        <ImageViewerComponent zoomImage={zoomImage}/>
+
                         <Box>
                             <Text>{subTitle}</Text>
                             <Text color="red.600" fontSize="20">￥{price}</Text>

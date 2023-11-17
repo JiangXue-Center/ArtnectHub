@@ -1,10 +1,12 @@
 import {Alert, Dimensions, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity} from 'react-native'
 import Swiper from 'react-native-swiper'
 import {Box, Image, Input, Text} from "native-base";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import WorkDetailsStore from "../../../../Stores/WorkDetailsStore";
 import {Entypo} from "@expo/vector-icons";
 import styleColors from "../../../../styles/styleColors";
+import useImageVieWerIsTrueStore from "../../../../Stores/ImageViewerIsTrue";
+import ImageViewerComponent from "../../../../components/ImageViewerComponent";
 
 //首页轮播图
 const {width, height} = Dimensions.get("window")
@@ -13,6 +15,16 @@ const AttentionSwiper = ({navigation}: { navigation: any }) => {
     const [isTrue, setIsTrue] = useState(true)
 
     const store = WorkDetailsStore.use.pictures()
+
+    const [zoomImage, setZoomImage] = useState([{url: ""}])
+    const changeIsTrue = useImageVieWerIsTrueStore.use.updateIsTrue()
+
+    useEffect(() => {
+        const formattedImages = store.imageCollection.map(item => ({
+            url: item
+        }))
+        setZoomImage(formattedImages)
+    },[])
 
     //对应不同下标设置不同的颜色
     const color = () => {
@@ -26,19 +38,27 @@ const AttentionSwiper = ({navigation}: { navigation: any }) => {
     return (
         <SafeAreaView style={{flex: 1, position: "relative"}}>
             <ScrollView>
-                <Swiper
-                    showsButtons={false}
-                    autoplay={true}
-                    style={styles.container}
-                    loop={true}
-                >
-                    {store.imageCollection.map((item) => (
-                        <TouchableOpacity>
-                            <Image size={400} width={width} source={{uri: item}} alt="啥也没有"/>
-                        </TouchableOpacity>
-                    ))}
-                </Swiper>
+                {/*轮播图*/}
+                <Box>
+                    <Swiper
+                        showsButtons={false}
+                        autoplay={true}
+                        style={styles.container}
+                        loop={true}
+                    >
+                        {store.imageCollection.map((item) => (
+                            <Box>
+                                <TouchableOpacity onPress={() => changeIsTrue(true)}>
+                                    <Image size={400} width={width} source={{uri: item}} alt="啥也没有"/>
+                                </TouchableOpacity>
+                            </Box>
+                        ))}
+                    </Swiper>
+                    {/*图片放大功能*/}
+                    <ImageViewerComponent zoomImage={zoomImage}/>
+                </Box>
 
+                {/*标签部分*/}
                 <Box padding={4}>
                     <Text fontSize={18}>{store.caption}</Text>
                     <Box flexDirection="row" padding={2}>
@@ -53,6 +73,7 @@ const AttentionSwiper = ({navigation}: { navigation: any }) => {
                     <Text fontSize={10}>{store.publishTime}</Text>
                 </Box>
 
+                {/*页脚部分*/}
                 <Box borderWidth="1" borderColor="gray.300" width={width} height={height}>
                     <Text p={4}>评论2</Text>
                 </Box>

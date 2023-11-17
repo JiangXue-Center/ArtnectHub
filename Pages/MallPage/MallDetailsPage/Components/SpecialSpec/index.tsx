@@ -1,8 +1,10 @@
 import {Dimensions, ScrollView, StyleSheet, TouchableOpacity, View} from "react-native";
 import {AntDesign, Feather} from "@expo/vector-icons";
 import {Actionsheet, Box, Button, Divider, Image, Modal, Text, useDisclose, VStack} from "native-base";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import MallStore from "../../../../../Stores/MallPageStore/MallStore";
+import useImageVieWerIsTrueStore from "../../../../../Stores/ImageViewerIsTrue";
+import ImageViewerComponent from "../../../../../components/ImageViewerComponent";
 
 const {width, height} = Dimensions.get("window")
 const SpecialSpec = () => {
@@ -16,8 +18,16 @@ const SpecialSpec = () => {
 
     const mallData = MallStore((state) => state.data)
     const specialSpec = mallData?.detail?.specialSpec
-    const skuBaseInfos = mallData?.skuBaseInfos
+    const skuBaseInfos = mallData.skuBaseInfos
+    const [zoomImage, setZoomImage] = useState([{url: ""}])
+    const setIsTrue = useImageVieWerIsTrueStore.use.updateIsTrue()
 
+    useEffect(() => {
+        const formattedImages = skuBaseInfos.map(item => ({
+            url: item.image
+        }))
+        setZoomImage(formattedImages)
+    }, [])
 
     const getIndex = (indexof: number) => {
         setIndexOf(indexof)
@@ -44,20 +54,25 @@ const SpecialSpec = () => {
                             {
                                 skuBaseInfos.map((item, index) => (
                                     <Box>
-                                        {index === getIndexOf?
+                                        {index === getIndexOf ?
                                             <Box flexDirection="row" key={index}>
                                                 <Box borderRadius="10" bg="gray.100" w={width / 4} m={2}>
-                                                    <Image
-                                                        key={index}
-                                                        source={{uri: item.image}}
-                                                        alt="图片"
-                                                        size="32"
-                                                        w={width / 4}
-                                                        h={height / 10}
-                                                        resizeMode="contain"
-                                                        display={index === getIndexOf ? "flex" : "none"}
-                                                    />
+                                                    <TouchableOpacity onPress={() => setIsTrue(true)}>
+                                                        <Image
+                                                            key={index}
+                                                            source={{uri: item.image}}
+                                                            alt="图片"
+                                                            size="32"
+                                                            w={width / 4}
+                                                            h={height / 10}
+                                                            resizeMode="contain"
+                                                            display={index === getIndexOf ? "flex" : "none"}
+                                                        />
+                                                    </TouchableOpacity>
+                                                    {/*图片放大功能*/}
+                                                    <ImageViewerComponent zoomImage={zoomImage}/>
                                                 </Box>
+
                                                 <Box justifyContent="flex-end" ml={4}>
                                                     <Text display={index === getIndexOf ? "flex" : "none"}
                                                           fontWeight="bold"
@@ -65,13 +80,11 @@ const SpecialSpec = () => {
                                                           fontSize="20"
                                                     >￥{item.price}</Text>
                                                 </Box>
-                                            </Box>:
+                                            </Box> :
                                             <Box></Box>
                                         }
                                     </Box>
                                 ))
-
-
                             }
                         </Box>
                         <Box flex="1" position="relative">
