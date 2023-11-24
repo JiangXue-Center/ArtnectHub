@@ -2,7 +2,6 @@ import Request from "../../service/http/Request";
 import AttentionScreenPicturesStore from "../../Stores/AttentionScreenPicturesStore";
 import Token from "../../Token";
 import WorkDetailsStore from "../../Stores/WorkDetailsStore";
-import useSWR from "swr";
 
 const AttentionScreenApi = (navigation: any) => {
     const swiperStoreAxios = AttentionScreenPicturesStore.use.axiosSwiperStore()

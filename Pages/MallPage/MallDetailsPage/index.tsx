@@ -62,12 +62,12 @@ import Description from "./Components/Description";
 
 //商品详情页
 const MallDetailsPage = () => {
-    // const addMall = MallStore.use.updateData()
+    const addMall = MallStore.use.updateData()
     const store = MallStore.use.data()
 
-    // useEffect(() => {
-    //     addMall(data)
-    // },[])
+    useEffect(() => {
+        addMall(store)
+    },[])
 
 
     console.log("data: "+JSON.stringify(store))

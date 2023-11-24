@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     SafeAreaView,
     FlatList,
@@ -15,7 +15,11 @@ import MallPageApi from "../../api/MallPageApi";
 const MallPage = ({navigation}:{navigation: any}) => {
     const MallStore = MallPageStore.use.businessStoreData()
     const [isFresh, setIsFresh] = useState(false)
-    const [mallApi] = MallPageApi({navigation})
+    const {mallApi,mallStoreApi} = MallPageApi({navigation})
+
+    useEffect(() => {
+        mallStoreApi()
+    }, []);
 
     const Item = ({spuId, mainImage, businessId, subTitle, price, businessName}: dataType) => {
         return (
