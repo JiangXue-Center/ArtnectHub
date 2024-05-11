@@ -73,7 +73,7 @@ const AttentionScreen = ({ navigation }: { navigation: any }) => {
 
   const renderItem = ({ item }: ({ item: any })) => (
     <Item id={item.id} authorId={item.authorId} authorAvatar={item.authorAvatar} likes={item.likes}
-      indexLink={item.indexLink} userName={item.userName} />
+      indexLink={item.indexLink} userName={item.userName} key={item.id} />
   );
 
   const isLoading = () => {

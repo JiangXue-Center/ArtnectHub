@@ -15,14 +15,11 @@ const SearchScreenApi = (navigation: any) => {
     const [num, setNum] = useState(1)
     const {instance} = Request()
 
-
     //点击搜索然后请求
     const sendSearchValueHttp = (searchValue: string) => {
-        console.log("value=" + searchValue)
         //将搜索关键词存入store里
         updateData(searchValue)
         navigation.navigate("WorkSearchPage")
-
         instance.get(`artwork/vo/keyword/${searchValue}/offset/${num}/size/20`, {
             headers: {
                 'Authorization': token,
