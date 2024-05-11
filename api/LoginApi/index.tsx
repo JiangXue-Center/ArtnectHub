@@ -32,8 +32,7 @@ const LoginApi = () => {
       //获取token
       console.log(1121);
       console.log(response.data);
-
-      // setToken(response.data.data.Authorization)
+      setToken(response.data.data.Authorization)
       navigation.navigate("HomePageRoute")
       console.log(4331);
 

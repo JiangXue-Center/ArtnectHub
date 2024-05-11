@@ -1,60 +1,60 @@
-import {Input, Stack, FormControl, Button, Text} from 'native-base';
-import {View} from "react-native";
-import {z} from "zod";
-import {Controller, useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { Input, Stack, FormControl, Button, Text } from 'native-base';
+import { View } from "react-native";
+import { z } from "zod";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import useLoginPageStore from "../../Stores/LoginPageStore";
 import instance from "../../service/http/Request";
-import {ForgetPasswordComponent} from "../../components/LoginPageFontComponent";
+import { ForgetPasswordComponent } from "../../components/LoginPageFontComponent";
 
 
 const formSchema = z.object({
-    password: z.string().min(8,"密码至少8位！").max(20,"密码最多20位"),
-    newPassword: z.string().min(8,"密码至少8位！").max(20,"密码最多20位"),
+    password: z.string().min(8, "密码至少8位！").max(20, "密码最多20位"),
+    newPassword: z.string().min(8, "密码至少8位！").max(20, "密码最多20位"),
 })
-    .refine(FormData => FormData.password===FormData.newPassword,{
-        path:['newPassword'],
+    .refine(FormData => FormData.password === FormData.newPassword, {
+        path: ['newPassword'],
         message: "两次密码不一致哦！"
     })
 
 type FormData = z.infer<typeof formSchema>
-const NewPassword = ({navigation}: { navigation?: any }) => {
+const NewPassword = ({ navigation }: { navigation?: any }) => {
     const certificateStore = useLoginPageStore.use.certificate()
     const codeStore = useLoginPageStore.use.code()
 
 
-    const {control,handleSubmit,formState:{errors} } = useForm<FormData>({
+    const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(formSchema)
     })
 
     const onSubmit = (data: any) => {
         navigation.navigate("Login")
-        console.log("certificate和code："+certificateStore,codeStore)
+        console.log("certificate和code：" + certificateStore, codeStore)
         console.log(data)
-        instance.post("",{
+        instance.post("", {
             certificate: certificateStore,
             code: codeStore,
             password: data.password,
             newPassword: data.newPassword
         }).then(response => {
-            console.log("response:"+response)
+            console.log("response:" + response)
             navigation.navigate("Login")
         }).catch(error => {
-            console.error("error:"+error)
+            console.error("error:" + error)
         })
 
     };
 
     return (
         <View>
-            <ForgetPasswordComponent/>
+            <ForgetPasswordComponent />
             <FormControl>
                 <Stack space={5} margin={4}>
                     <Stack>
                         <FormControl.Label>密码</FormControl.Label>
                         <Controller
                             control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
+                            render={({ field: { onChange, onBlur, value } }) => (
                                 <Input
                                     variant="underlined"
                                     p={2}
@@ -66,7 +66,7 @@ const NewPassword = ({navigation}: { navigation?: any }) => {
                                 />
                             )}
                             name="password"
-                            rules={{required: true}}
+                            rules={{ required: true }}
                         />
                         <Text color="red.500">{errors.password?.message &&
                             <Text>{errors.password.message}</Text>}</Text>
@@ -75,7 +75,7 @@ const NewPassword = ({navigation}: { navigation?: any }) => {
                         <FormControl.Label>确认密码</FormControl.Label>
                         <Controller
                             control={control}
-                            render={({field: {onChange, onBlur, value}}) => (
+                            render={({ field: { onChange, onBlur, value } }) => (
                                 <Input
                                     variant="underlined"
                                     p={2}
@@ -87,7 +87,7 @@ const NewPassword = ({navigation}: { navigation?: any }) => {
                                 />
                             )}
                             name="newPassword"
-                            rules={{required: true}}
+                            rules={{ required: true }}
                         />
                         <Text color="red.500">{errors.newPassword?.message &&
                             <Text>{errors.newPassword.message}</Text>}</Text>
@@ -95,7 +95,7 @@ const NewPassword = ({navigation}: { navigation?: any }) => {
 
                     <Stack>
                         <Button borderRadius="full" colorScheme="lightBlue"
-                                onPress={handleSubmit(onSubmit)}>完成</Button>
+                            onPress={handleSubmit(onSubmit)}>完成</Button>
                     </Stack>
                 </Stack>
             </FormControl>

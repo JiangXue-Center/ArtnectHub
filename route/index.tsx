@@ -1,9 +1,9 @@
 import LoginPageRoute from "./PageRoute";
 
-const Index = () => {
+const Route = () => {
   return(
       <LoginPageRoute/>
   )
 }
 
-export default Index
+export default Route

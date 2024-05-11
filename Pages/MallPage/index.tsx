@@ -1,38 +1,38 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     FlatList,
     StyleSheet,
     TouchableOpacity, Dimensions,
 } from 'react-native';
-import {Box, Divider, Image, Text, VStack} from "native-base";
+import { Box, Divider, Image, Text, VStack } from "native-base";
 import MallPageStore from "../../Stores/MallPageStore";
 import MallPageSwiper from "../../Layouts/MallPageSwiper";
-import {dataType} from "../../Stores/MallSearchDataStore";
-import {AntDesign} from "@expo/vector-icons";
+import { dataType } from "../../Stores/MallSearchDataStore";
+import { AntDesign } from "@expo/vector-icons";
 import MallPageApi from "../../api/MallPageApi";
 
-const MallPage = ({navigation}:{navigation: any}) => {
+const MallPage = ({ navigation }: { navigation: any }) => {
     const MallStore = MallPageStore.use.businessStoreData()
     const [isFresh, setIsFresh] = useState(false)
-    const {mallApi,mallStoreApi} = MallPageApi({navigation})
+    const { mallApi, mallStoreApi } = MallPageApi({ navigation })
 
     useEffect(() => {
         mallStoreApi()
     }, []);
 
-    const Item = ({spuId, mainImage, businessId, subTitle, price, businessName}: dataType) => {
+    const Item = ({ spuId, mainImage, businessId, subTitle, price, businessName }: dataType) => {
         return (
             <SafeAreaView>
                 <Box borderWidth="1" borderColor="gray.300" borderRadius="lg"
-                     width={Dimensions.get("window").width / 2.2} margin={2}>
-                    <VStack divider={<Divider/>} key={spuId}>
+                    width={Dimensions.get("window").width / 2.2} margin={2}>
+                    <VStack divider={<Divider />} key={spuId}>
                         <Box>
                             <TouchableOpacity onPress={() => mallApi(spuId)}>
                                 <Image size={100} height={200}
-                                       width={Dimensions.get("window").width / 2.1}
-                                       source={{uri: mainImage}}
-                                       alt="图片地址错误"
+                                    width={Dimensions.get("window").width / 2.1}
+                                    source={{ uri: mainImage }}
+                                    alt="图片地址错误"
                                 />
                             </TouchableOpacity>
                         </Box>
@@ -42,9 +42,9 @@ const MallPage = ({navigation}:{navigation: any}) => {
                             <TouchableOpacity>
                                 <Box alignItems="center" m={1}>
                                     <Box w="92%" backgroundColor="gray.200" justifyContent="space-between"
-                                         flexDirection="row" alignItems="center" style={[styles.textType]}>
+                                        flexDirection="row" alignItems="center" style={[styles.textType]}>
                                         <Text id={businessId} fontSize={12}>{businessName}</Text>
-                                        <AntDesign name="right" size={10} color="black"/>
+                                        <AntDesign name="right" size={10} color="black" />
                                     </Box>
                                 </Box>
                             </TouchableOpacity>
@@ -55,11 +55,11 @@ const MallPage = ({navigation}:{navigation: any}) => {
         );
     }
 
-    const renderItem = ({item}: ({
+    const renderItem = ({ item }: ({
         item: any
     })) => (
         <Item spuId={item.spuId} mainImage={item.mainImage} businessId={item.businessId} subTitle={item.subTitle}
-              price={item.price} businessName={item.businessName}/>
+            price={item.price} businessName={item.businessName} />
     );
 
     const isLoading = () => {
@@ -97,7 +97,7 @@ const MallPage = ({navigation}:{navigation: any}) => {
                 initialNumToRender={10}//让数据先加载三条，它会闪一下
                 numColumns={2}//指定列数，数据项必须等高 ---- 无法支持瀑布流
                 inverted={false}//列表反转
-                ListHeaderComponent={<MallPageSwiper/>}
+                ListHeaderComponent={<MallPageSwiper />}
                 //refreshing下拉刷新,true的话下拉刷新的动画会一直存在，加载时调用的函数onRefresh
                 refreshing={isFresh}
                 onRefresh={() => isLoading()}
