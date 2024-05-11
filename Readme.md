@@ -25,8 +25,8 @@
 3. 打开该目录的终端运行
    > yarn install
 4. 然后再运行
-   > pnpm run dev
-5. 在chrome浏览器打开http://localhost:5173/即可
+   > yarn start
+5. 再使用expo go扫描二维码即可使用
 
 ## 项目模块描述
 * 网关模块，主要作用是通过AuthFilter实现请求的身份验证和权限控制，确保只有具有有效访问令牌的用户能够访问受保护的资源，并利用JWT和Redis缓存来提高验证效率；同时，通过WebSocketFilter处理WebSocket请求，将其适配为HTTP(s)请求以与后端服务通信，确保网关在处理WebSocket请求时的正确性和适配性。
