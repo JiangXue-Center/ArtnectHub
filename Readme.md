@@ -16,7 +16,7 @@
 * react >= 18.2.0
 
 ## 快速开始
-前置要求：本机安装nodejs >= 18，[yarn](https://www.npmjs.com/package/yarn)，在安卓手机上要安装
+前置要求：本机安装nodejs >= 18，[yarn](https://www.npmjs.com/package/yarn)，在安卓手机上要安装[Expo Go49](https://expo.dev/go)
 
 如何运行程序：
 
