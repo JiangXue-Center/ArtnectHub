@@ -1,6 +1,6 @@
-import {create} from "zustand";
+import { create } from "zustand";
 import createSelectors from "../../utils/zustandSelector";
-import {createJSONStorage, persist} from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface LoginPageStoreType {
@@ -17,34 +17,36 @@ interface LoginPageStoreType {
 interface Action {
     updateStore: (certificate: LoginPageStoreType['certificate'], code: LoginPageStoreType['code']) => void
     updateRegister_token: (register_token: LoginPageStoreType['register_token']) => void
-    setToken: (Authorization: LoginPageStoreType['Authorization']) => void
+    setToken: (Authorization: string) => void
 }
 
 const useLoginPageStore = createSelectors(create<LoginPageStoreType & Action>()(persist((set) => ({
 
-        certificate: "1",
+    certificate: "1",
 
-        code: "",
+    code: "",
 
-        register_token: "",
+    register_token: "",
 
-        Authorization: "",
+    Authorization: "",
 
-        updateStore: (certificate, code) => set(() => ({certificate: certificate, code: code})),
+    updateStore: (certificate, code) => set(() => ({ certificate: certificate, code: code })),
 
-        updateRegister_token: (register_token) => set(() => ({register_token})),
+    updateRegister_token: (register_token) => set(() => ({ register_token })),
 
-        setToken: (Authorization) => set(() => ({Authorization: Authorization}))
-    }), {
-        name: "LoginToken",
-        storage: createJSONStorage(() => AsyncStorage),
-        partialize: state =>
-            Object.fromEntries(
-                Object.entries(state).filter(
-                    ([key]) => ["Authorization"].includes(key)
-                )
+    setToken: (Authorization) => set(() => ({
+        Authorization: Authorization
+    }))
+}), {
+    name: "LoginToken",
+    storage: createJSONStorage(() => AsyncStorage),
+    partialize: state =>
+        Object.fromEntries(
+            Object.entries(state).filter(
+                ([key]) => ["Authorization"].includes(key)
             )
-    }
+        )
+}
 )))
 
 export default useLoginPageStore

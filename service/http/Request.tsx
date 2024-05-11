@@ -1,12 +1,13 @@
 import axios from "axios";
 import {TIMEOUT} from "./Config";
 import {ErrorTip} from "../../components/requestAlert/Tip/ErrorTip";
+import Token from "../../Token";
 
 /**封装axios文件**/
 const Request = () => {
-
+    const { token } = Token()
     const instance = axios.create({
-        baseURL: "http://192.168.43.220:7111",
+        baseURL: "http://10.23.157.17:7111",
         timeout: TIMEOUT
     })
 
@@ -17,6 +18,7 @@ const Request = () => {
         (config) => {
             console.log("config.data:" + config.data)
             console.log("发起请求成功")
+            config.headers.Authorization = token
             return config;
         },
         (err) => {

@@ -22,10 +22,12 @@ const LoginPageRoute = () => {
         <NativeBaseProvider>
             <NavigationContainer>
                 <Stack.Navigator>
-                    {token ?
+                    {/* {token ?
                         <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{headerShown: false}}/> :
                         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
-                    }
+                    } */}
+                    <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                    <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{ headerShown: false }} /> 
                     <Stack.Screen name="PhoneLogin" component={CodeLogin} options={{headerShown: false}}/>
                     <Stack.Screen name="EmailLogin" component={PasswordLogin} options={{headerShown: false}}/>
                     <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{title: "重设密码"}}/>
