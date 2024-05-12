@@ -12,46 +12,48 @@ import MallPageSearchPage from "../../Pages/MallPage/MallPageSearchPage";
 import MallPageSearchRoute from "../MallPageSearchRoute";
 import Token from "../../Token";
 import MallDetailsPage from "../../Pages/MallPage/MallDetailsPage";
+import MallDetailsPageTitle from "../../Pages/MallPage/MallDetailsPage/Components/MallDetailsPageTitle";
 
 const Stack = createNativeStackNavigator()
 const LoginPageRoute = () => {
-    const { token } = Token()
-    return (
-        <Stack.Navigator>
-            {token ?
-                <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{ headerShown: false }} /> :
-                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            }
-            {/* <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+  const { token } = Token()
+  return (
+    <Stack.Navigator>
+      {token ?
+        <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{ headerShown: false }} /> :
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      }
+      {/* <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                 <Stack.Screen name="HomePageRoute" component={HomePageRoute} options={{ headerShown: false }} /> */}
-            <Stack.Screen name="PhoneLogin" component={CodeLogin} options={{ headerShown: false }} />
-            <Stack.Screen name="EmailLogin" component={PasswordLogin} options={{ headerShown: false }} />
-            <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: "重设密码" }} />
-            <Stack.Screen name="RestPassword" component={RestPassword} options={{ title: "设置密码" }} />
-            <Stack.Screen name="Register" component={Register} options={{ title: "注册" }} />
-            <Stack.Screen name="NewPassword" component={NewPassword} options={{ title: "重设密码" }} />
-            <Stack.Screen name="InformationPage" component={InformationPage} options={{ title: "消息" }} />
-            <Stack.Screen name="HomeSearchPage" component={SearchRoute} options={{ headerShown: false }} />
-            <Stack.Screen
-                name="WorkDetailsPage"
-                component={WorkDetailsPage}
-                options={{
-                    title: "",
-                    headerLeft: () => (
-                        <HeaderTitleLeft />
-                    )
-                }} />
-            <Stack.Screen
-                name="MallPageSearchPage"
-                component={MallPageSearchRoute}
-                options={{
-                    headerShown: false
-                }} />
-            <Stack.Screen name="MallDetailsPage" component={MallDetailsPage} options={{ title: "商品详情页" }} />
-
-        </Stack.Navigator>
-
-    )
+      <Stack.Screen name="PhoneLogin" component={CodeLogin} options={{ headerShown: false }} />
+      <Stack.Screen name="EmailLogin" component={PasswordLogin} options={{ headerShown: false }} />
+      <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ title: "重设密码" }} />
+      <Stack.Screen name="RestPassword" component={RestPassword} options={{ title: "设置密码" }} />
+      <Stack.Screen name="Register" component={Register} options={{ title: "注册" }} />
+      <Stack.Screen name="NewPassword" component={NewPassword} options={{ title: "重设密码" }} />
+      <Stack.Screen name="InformationPage" component={InformationPage} options={{ title: "消息" }} />
+      <Stack.Screen name="HomeSearchPage" component={SearchRoute} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="WorkDetailsPage"
+        component={WorkDetailsPage}
+        options={{
+          title: "",
+          headerLeft: () => (
+            <HeaderTitleLeft />
+          )
+        }} />
+      <Stack.Screen
+        name="MallPageSearchPage"
+        component={MallPageSearchRoute}
+        options={{
+          headerShown: false
+        }} />
+      <Stack.Screen name="MallDetailsPage" component={MallDetailsPage}
+        options={{
+          headerTitle: () => <MallDetailsPageTitle/>
+        }} />
+    </Stack.Navigator>
+  )
 }
 
 export default LoginPageRoute

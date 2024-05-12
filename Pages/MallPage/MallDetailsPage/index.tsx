@@ -8,6 +8,7 @@ import MallStore from "../../../Stores/MallPageStore/MallStore";
 import {useEffect} from "react";
 import Description from "./Components/Description";
 
+// 数据模拟
 // const data = {
 //     business: {
 //         businessId: 1,
@@ -69,8 +70,6 @@ const MallDetailsPage = () => {
         addMall(store)
     },[])
 
-
-    console.log("data: "+JSON.stringify(store))
     return (
         <SafeAreaView style={{flex: 1, position: "relative"}}>
             <ScrollView>
