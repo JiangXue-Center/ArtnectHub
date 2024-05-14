@@ -4,7 +4,7 @@ import Register from "../../Pages/LoginPage/Register";
 import RestPassword from "../../Pages/LoginPage/RestPassword";
 import NewPassword from "../../Pages/LoginPage/NewPassword";
 import HomePageRoute from "../HomePageRoute";
-import InformationPage from "../../Pages/InformationPage";
+import InformationPage from "../../Pages/InformationPage/LikePeople";
 import SearchRoute from "../SearchRoute";
 import WorkDetailsPage from "../../Pages/HomePage/WorkDetailsPage/Components";
 import HeaderTitleLeft from "../../Pages/HomePage/WorkDetailsPage/Components/HeaderTitleLeft";
@@ -13,6 +13,9 @@ import MallPageSearchRoute from "../MallPageSearchRoute";
 import Token from "../../Token";
 import MallDetailsPage from "../../Pages/MallPage/MallDetailsPage";
 import MallDetailsPageTitle from "../../Pages/MallPage/MallDetailsPage/Components/MallDetailsPageTitle";
+import InformationRoute from "../InforMationRoute";
+import ChatPage from "../../Pages/InformationPage/Components/ChatPage";
+import ChatTitle from "../../Pages/InformationPage/Components/ChatTitle";
 
 const Stack = createNativeStackNavigator()
 const LoginPageRoute = () => {
@@ -31,7 +34,7 @@ const LoginPageRoute = () => {
       <Stack.Screen name="RestPassword" component={RestPassword} options={{ title: "设置密码" }} />
       <Stack.Screen name="Register" component={Register} options={{ title: "注册" }} />
       <Stack.Screen name="NewPassword" component={NewPassword} options={{ title: "重设密码" }} />
-      <Stack.Screen name="InformationPage" component={InformationPage} options={{ title: "消息" }} />
+      <Stack.Screen name="InformationPage" component={InformationRoute} options={{ title: "消息" }} />
       <Stack.Screen name="HomeSearchPage" component={SearchRoute} options={{ headerShown: false }} />
       <Stack.Screen
         name="WorkDetailsPage"
@@ -50,8 +53,12 @@ const LoginPageRoute = () => {
         }} />
       <Stack.Screen name="MallDetailsPage" component={MallDetailsPage}
         options={{
-          headerTitle: () => <MallDetailsPageTitle/>
+          headerTitle: () => <MallDetailsPageTitle />
         }} />
+      <Stack.Screen name="ChatPage" component={ChatPage} options={{
+        title: "聊天",
+        headerTitle: () => <ChatTitle/>
+      }}/>
     </Stack.Navigator>
   )
 }

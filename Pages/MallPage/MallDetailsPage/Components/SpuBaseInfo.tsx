@@ -11,6 +11,9 @@ const {width} = Dimensions.get("window")
 const SpuBaseInfo = () => {
     // const mallStore = MallStore.use.data()
     const spuBaseInfo = MallStore.use.data().spuBaseInfo
+    const store = MallStore.use.data()
+    console.log("store:"+JSON.stringify(store));
+    
 
     return (
         <View>
